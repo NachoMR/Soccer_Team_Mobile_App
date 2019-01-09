@@ -1,0 +1,31 @@
+/****** Responsive Design between xs and sm ******/
+
+.logo {
+	height: 100px;
+	width: 100px;
+}
+
+@media (min-width: 576px) {
+	.logo {
+		height: 80px;
+		width: 80px;
+	}
+}
+
+h1{
+	font-size: 1rem;
+}
+
+@media (min-width: 576px) {
+	h1{
+		font-size: 2rem;
+		color: red;
+	}
+}
+
+
+
+
+/****** Responsive Design between xs and sm ******/
+
+
