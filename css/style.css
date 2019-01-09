@@ -12,20 +12,31 @@
 	}
 }
 
-h1{
+h1 {
 	font-size: 1rem;
 }
 
 @media (min-width: 576px) {
-	h1{
+	h1 {
 		font-size: 2rem;
 		color: red;
+	}
+}
+
+.teams_width {
+	width: 10rem;
+}
+
+@media (min-width: 576px) {
+	.teams_width {
+		width: 13rem;
 	}
 }
 
 
 
 
+
 /****** Responsive Design between xs and sm ******/
 
-
+/****** photos for the "teams page" ******/
