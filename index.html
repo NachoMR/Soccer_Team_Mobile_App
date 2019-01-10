@@ -15,7 +15,7 @@
 </head>
 
 <body>
-	<div class="container-fluid">
+	<div id="app" class="container-fluid">
 		<div class="row py-2 bg-light sticky-top">
 			<div class="col-sm">
 				<header>
@@ -71,133 +71,755 @@
 		<div class="row">
 			<div class="col-sm">
 				<main>
+					<!--				*****************DIV HOME*****************-->
+					<div v-show="ok">
+						<div>
+							<div><img src="img/design2_image1.jpg" class="img-fluid rounded my-2" alt="children playing soccer"></div>						
+							<div>
+								<p class="h5 text-center">LASTEST UPDATES</p>
+								<p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium quam animi optio tenetur quia quaerat inventore, quod officia eligendi hic iste vero veniam quos cum architecto esse, sapiente laudantium fuga.</p>
+							</div>
+							<div class="text-center mb-3">
+								<p class="h5">SEASON STATS</p>
+								<select name="">
+									<option  value="">Club Stats</option>
+									<option  value="">Player Stats</option>
+								</select>
+							</div>
+							<table class="w-100 table-striped table-hover text-center">
+								<thead>
+									<tr>
+										<th>Team</th>
+										<th>Total</th>
+										<th>Wins</th>
+										<th>Losses</th>
+										<th>Points</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>U1</td>
+										<td>60</td>
+										<td>18</td>
+										<td>3</td>
+										<td>2</td>
+									</tr>
+									<tr>
+										<td>U2</td>
+										<td>60</td>
+										<td>18</td>
+										<td>3</td>
+										<td>2</td>
+									</tr>
+									<tr>
+										<td>U3</td>
+										<td>60</td>
+										<td>18</td>
+										<td>3</td>
+										<td>2</td>
+									</tr>
+									<tr>
+										<td>U4</td>
+										<td>60</td>
+										<td>18</td>
+										<td>3</td>
+										<td>2</td>
+									</tr>
+									<tr>
+										<td>U5</td>
+										<td>60</td>
+										<td>18</td>
+										<td>3</td>
+										<td>2</td>
+									</tr>
+									<tr>
+										<td>U6</td>
+										<td>60</td>
+										<td>18</td>
+										<td>3</td>
+										<td>2</td>
+									</tr>
+									<tr>
+										<td>U7</td>
+										<td>60</td>
+										<td>18</td>
+										<td>3</td>
+										<td>2</td>
+									</tr>
+									<tr>
+										<td>U8</td>
+										<td>60</td>
+										<td>18</td>
+										<td>3</td>
+										<td>2</td>
+									</tr>
+									<tr>
+										<td>U9</td>
+										<td>60</td>
+										<td>18</td>
+										<td>3</td>
+										<td>2</td>
+									</tr>
+									<tr>
+										<td>U10</td>
+										<td>60</td>
+										<td>18</td>
+										<td>3</td>
+										<td>2</td>
+									</tr>
+									<tr>
+										<td>U11</td>
+										<td>60</td>
+										<td>18</td>
+										<td>3</td>
+										<td>2</td>
+									</tr>
+									<tr>
+										<td>U12</td>
+										<td>60</td>
+										<td>18</td>
+										<td>3</td>
+										<td>2</td>
+									</tr>
+									<tr>
+										<td>U13</td>
+										<td>60</td>
+										<td>18</td>
+										<td>3</td>
+										<td>2</td>
+									</tr>
+									<tr>
+										<td>U14</td>
+										<td>60</td>
+										<td>18</td>
+										<td>3</td>
+										<td>2</td>
+									</tr>
+									<tr>
+										<td>U15</td>
+										<td>60</td>
+										<td>18</td>
+										<td>3</td>
+										<td>2</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<!--				*****************DIV VENUES*****************-->
+					<div v-show="ok">
+						<div class="text-center">
+							<p class="h5">GAME LOCATIONS</p>
+							<select name="">
+								<option  value="">AJ Katzenmaier Elementary</option>
+								<option  value="">Greenbay Elementary</option>
+								<option  value="">Howard A Yeager Elementary</option>
+								<option  value="">Marjorie P Hart Elementary</option>
+								<option  value="">North Elementary</option>
+								<option  value="">South Elementary</option>
+							</select>
+						</div>
 
-					<div><img src="img/design2_image1.jpg" class="img-fluid rounded my-2" alt="children playing soccer"></div>
-					<p class="h5">LASTEST UPDATES</p>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium quam animi optio tenetur quia quaerat inventore, quod officia eligendi hic iste vero veniam quos cum architecto esse, sapiente laudantium fuga.</p>
-					<p class="h5">SEASON STATS</p>
-					<select name="state" v-model="statesFilter" id="selectDropDown">
-						<option id="allStates" value="all">Club Stats</option>
-						<option id="allStates" value="all">Player Stats</option>
-					</select>
-					<table class="w-100 table-striped table-hover text-center">
-						<thead>
-							<tr>
-								<th>Team</th>
-								<th>Total</th>
-								<th>Wins</th>
-								<th>Losses</th>
-								<th>Points</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>U1</td>
-								<td>60</td>
-								<td>18</td>
-								<td>3</td>
-								<td>2</td>
-							</tr>
-							<tr>
-								<td>U2</td>
-								<td>60</td>
-								<td>18</td>
-								<td>3</td>
-								<td>2</td>
-							</tr>
-							<tr>
-								<td>U3</td>
-								<td>60</td>
-								<td>18</td>
-								<td>3</td>
-								<td>2</td>
-							</tr>
-							<tr>
-								<td>U4</td>
-								<td>60</td>
-								<td>18</td>
-								<td>3</td>
-								<td>2</td>
-							</tr>
-							<tr>
-								<td>U5</td>
-								<td>60</td>
-								<td>18</td>
-								<td>3</td>
-								<td>2</td>
-							</tr>
-							<tr>
-								<td>U6</td>
-								<td>60</td>
-								<td>18</td>
-								<td>3</td>
-								<td>2</td>
-							</tr>
-							<tr>
-								<td>U7</td>
-								<td>60</td>
-								<td>18</td>
-								<td>3</td>
-								<td>2</td>
-							</tr>
-							<tr>
-								<td>U8</td>
-								<td>60</td>
-								<td>18</td>
-								<td>3</td>
-								<td>2</td>
-							</tr>
-							<tr>
-								<td>U9</td>
-								<td>60</td>
-								<td>18</td>
-								<td>3</td>
-								<td>2</td>
-							</tr>
-							<tr>
-								<td>U10</td>
-								<td>60</td>
-								<td>18</td>
-								<td>3</td>
-								<td>2</td>
-							</tr>
-							<tr>
-								<td>U11</td>
-								<td>60</td>
-								<td>18</td>
-								<td>3</td>
-								<td>2</td>
-							</tr>
-							<tr>
-								<td>U12</td>
-								<td>60</td>
-								<td>18</td>
-								<td>3</td>
-								<td>2</td>
-							</tr>
-							<tr>
-								<td>U13</td>
-								<td>60</td>
-								<td>18</td>
-								<td>3</td>
-								<td>2</td>
-							</tr>
-							<tr>
-								<td>U14</td>
-								<td>60</td>
-								<td>18</td>
-								<td>3</td>
-								<td>2</td>
-							</tr>
-							<tr>
-								<td>U15</td>
-								<td>60</td>
-								<td>18</td>
-								<td>3</td>
-								<td>2</td>
-							</tr>
-						</tbody>
-					</table>
+
+						<div class="mb-1">
+							<p>24 W. Walton St., Chicago, IL 60610</p>
+							<div class="maps embed-responsive embed-responsive-1by1">
+								<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2165.118492508806!2d-87.63092258908124!3d41.90032115714603!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x880fd34e07f69da7%3A0x15e198c063fc787c!2sAJ+Katzenmaier+Elementary!5e0!3m2!1sen!2ses!4v1542890272144"></iframe>
+							</div>
+						</div>
+					</div>
+					<!--				*****************DIV SCHEDULE*****************-->
+					<div v-show="ok">
+						<div class="py-2 text-center">
+							<button type="button" class="btn btn-outline-dark">SEP</button>
+							<button type="button" class="btn btn-outline-dark">OCT</button>
+							<button type="button" class="btn btn-outline-dark">NOV</button>
+							<button type="button" class="btn btn-outline-dark">DIC</button>
+							<button type="button" class="btn btn-outline-dark">ENE</button>
+						</div>
+
+						<table class="w-100 table-striped table-hover text-center">
+							<p class="h6 mt-3 mb-0 text-center font-weight-lighter font-italic">Click on the match to see details</p>
+							<thead>
+								<tr>
+									<th>SEP</th>
+									<th>Teams</th>
+									<th>Venue</th>
+									<th>Times</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>9/01</td>
+									<td>U1 vs U4</td>
+									<td><a href="schedule2.html">AJ Katzenmaier</a></td>
+									<td>9:30 a.m.</td>
+								</tr>
+								<tr>
+									<td>9/01</td>
+									<td>U3 vs U2</td>
+									<td><a href="schedule2.html">Greenbay</a></td>
+									<td>1:00 p.m.</td>
+								</tr>
+								<tr>
+									<td>9/08</td>
+									<td>U5 vs U6</td>
+									<td><a href="schedule2.html">Howard A Yeager</a></td>
+									<td>9:30 a.m.</td>
+								</tr>
+								<tr>
+									<td>9/08</td>
+									<td>U6 vs U1</td>
+									<td><a href="schedule2.html">Marjorie P Hart</a></td>
+									<td>1:00 p.m.</td>
+								</tr>
+								<tr>
+									<td>9/15</td>
+									<td>U2 vs U4</td>
+									<td><a href="schedule2.html">North</a></td>
+									<td>9:30 a.m.</td>
+								</tr>
+								<tr>
+									<td>9/15</td>
+									<td>U3 vs U5</td>
+									<td><a href="schedule2.html">AJ Katzenmaier</a></td>
+									<td>1:00 p.m.</td>
+								</tr>
+								<tr>
+									<td>9/22</td>
+									<td>U1 vs U3</td>
+									<td><a href="schedule2.html">South</a></td>
+									<td>9:30 a.m.</td>
+								</tr>
+								<tr>
+									<td>9/22</td>
+									<td>U2 vs U6</td>
+									<td><a href="schedule2.html">Howard A Yeager</a></td>
+									<td>1: p.m.</td>
+								</tr>
+								<tr>
+									<td>9/29</td>
+									<td>U4 vs U5</td>
+									<td><a href="schedule2.html">Greenbay</a></td>
+									<td>9:30 a.m.</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<!--				*****************DIV SCHEDULE-2*****************-->
+					<div v-show="ok">
+						<p class="h5 text-center mb-3">Team U4 vs U2</p>
+
+						<div class="d-flex flex-column align-items-center">
+							<div class="d-flex">
+								<span class="fas fa-calendar-alt mx-3"></span>
+								<p class="h6">Date: September 01</p>
+							</div>
+							<div class="d-flex">
+								<span class="far fa-clock mx-3"></span>
+								<p class="h6">Time: 9:30am</p>
+							</div>
+							<div class="d-flex">
+								<span class="fas fa-map-marker-alt mx-3"></span>
+								<p class="h6">Venue: AJ Katzenmaier</p>
+							</div>
+						</div>
+
+						<div class="d-flex flex-wrap justify-content-between">
+							<div class="teams_width my-2">
+								<a href="teams2.html">
+									<img src="img/team1.JPG" class="card-img-top" alt="...">
+									<p class="card-title h6 text-center">U2</p>
+								</a>
+							</div>
+							<div class="teams_width my-2">
+								<a href="teams2.html">
+									<img src="img/team2.JPG" class="card-img-top" alt="...">
+									<p class="card-title h6 text-center">U2</p>
+								</a>
+							</div>
+						</div>
+						<div class="d-flex justify-content-around mb-3">
+							<div class="overflow-auto border border-light height200">
+								<ul>
+									<li>John Boozman</li>
+									<li>Richard M. Burr</li>
+									<li>Benjamin L. Cardin</li>
+									<li>Richard J. Durbin</li>
+									<li>Jeff Flake</li>
+									<li>Johnny Isakson</li>
+									<li>Mike Johanns</li>
+									<li>Rob Portman</li>
+									<li>Patrick J. Toomey</li>
+									<li>Kelly Ayotte</li>
+									<li>Patty Murray</li>
+									<li>Orrin G. Hatch</li>
+									<li>Robert E. Latta</li>
+									<li>William M. Thornberry</li>
+								</ul>
+							</div>
+							<div class="overflow-auto border border-light height200">
+								<ul>
+									<li>John Boozman</li>
+									<li>Richard M. Burr</li>
+									<li>Benjamin L. Cardin</li>
+									<li>Richard J. Durbin</li>
+									<li>Jeff Flake</li>
+									<li>Johnny Isakson</li>
+									<li>Mike Johanns</li>
+									<li>Rob Portman</li>
+									<li>Patrick J. Toomey</li>
+									<li>Kelly Ayotte</li>
+									<li>Patty Murray</li>
+									<li>Orrin G. Hatch</li>
+									<li>Robert E. Latta</li>
+									<li>William M. Thornberry</li>
+								</ul>
+							</div>
+						</div>
+						<p class="h5 m text-center">Season Stats</p>
+						<table class="w-100 table-striped table-hover text-center">
+							<thead>
+								<tr>
+									<th>Team</th>
+									<th>Total</th>
+									<th>Wins</th>
+									<th>Losses</th>
+									<th>Points</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>U1</td>
+									<td>60</td>
+									<td>18</td>
+									<td>3</td>
+									<td>2</td>
+								</tr>
+								<tr>
+									<td>U2</td>
+									<td>60</td>
+									<td>18</td>
+									<td>3</td>
+									<td>2</td>
+								</tr>
+								<tr class="bg-success text-white">
+									<td>U3</td>
+									<td>60</td>
+									<td>18</td>
+									<td>3</td>
+									<td>2</td>
+								</tr>
+								<tr>
+									<td>U4</td>
+									<td>60</td>
+									<td>18</td>
+									<td>3</td>
+									<td>2</td>
+								</tr>
+								<tr class="bg-success text-white">
+									<td>U5</td>
+									<td>60</td>
+									<td>18</td>
+									<td>3</td>
+									<td>2</td>
+								</tr>
+								<tr>
+									<td>U6</td>
+									<td>60</td>
+									<td>18</td>
+									<td>3</td>
+									<td>2</td>
+								</tr>
+								<tr>
+									<td>U7</td>
+									<td>60</td>
+									<td>18</td>
+									<td>3</td>
+									<td>2</td>
+								</tr>
+								<tr>
+									<td>U8</td>
+									<td>60</td>
+									<td>18</td>
+									<td>3</td>
+									<td>2</td>
+								</tr>
+								<tr>
+									<td>U9</td>
+									<td>60</td>
+									<td>18</td>
+									<td>3</td>
+									<td>2</td>
+								</tr>
+								<tr>
+									<td>U10</td>
+									<td>60</td>
+									<td>18</td>
+									<td>3</td>
+									<td>2</td>
+								</tr>
+								<tr>
+									<td>U11</td>
+									<td>60</td>
+									<td>18</td>
+									<td>3</td>
+									<td>2</td>
+								</tr>
+								<tr>
+									<td>U12</td>
+									<td>60</td>
+									<td>18</td>
+									<td>3</td>
+									<td>2</td>
+								</tr>
+								<tr>
+									<td>U13</td>
+									<td>60</td>
+									<td>18</td>
+									<td>3</td>
+									<td>2</td>
+								</tr>
+								<tr>
+									<td>U14</td>
+									<td>60</td>
+									<td>18</td>
+									<td>3</td>
+									<td>2</td>
+								</tr>
+								<tr>
+									<td>U15</td>
+									<td>60</td>
+									<td>18</td>
+									<td>3</td>
+									<td>2</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<!--				*****************DIV*****************-->
+					<div v-show="ok">
+						<div class="d-flex flex-wrap justify-content-between">
+							<div class="teams_width my-2">
+								<a href="teams2.html">
+									<img src="img/team1.JPG" class="card-img-top" alt="...">
+									<p class="card-title h6 text-center">U2</p>
+								</a>
+							</div>
+							<div class="teams_width my-2">
+								<a href="teams2.html">
+									<img src="img/team2.JPG" class="card-img-top" alt="...">
+									<p class="card-title h6 text-center">U2</p>
+								</a>
+							</div>
+							<div class="teams_width my-2">
+								<a href="teams2.html">
+									<img src="img/team3.JPG" class="card-img-top" alt="...">
+									<p class="card-title h6 text-center">U2</p>
+								</a>
+							</div>
+							<div class="teams_width my-2">
+								<a href="teams2.html">
+									<img src="img/team4.JPG" class="card-img-top" alt="...">
+									<p class="card-title h6 text-center">U2</p>
+								</a>
+							</div>
+							<div class="teams_width my-2">
+								<a href="teams2.html">
+									<img src="img/team5.JPG" class="card-img-top" alt="...">
+									<p class="card-title h6 text-center">U2</p>
+								</a>
+							</div>
+							<div class="teams_width my-2">
+								<a href="teams2.html">
+									<img src="img/team6.JPG" class="card-img-top" alt="...">
+									<p class="card-title h6 text-center">U2</p>
+								</a>
+							</div>
+							<div class="teams_width my-2">
+								<a href="teams2.html">
+									<img src="img/team7.JPG" class="card-img-top" alt="...">
+									<p class="card-title h6 text-center">U2</p>
+								</a>
+							</div>
+						</div>
+					</div>
+					<!--				*****************DIV*****************-->
+					<div v-show="ok">
+						<p class="h5 text-center">Team U4</p>
+						<div class="d-flex justify-content-around align-items-center">
+							<div class="my-2">
+								<a href="teams2.html">
+									<img src="img/team1.JPG" class="teams_width" alt="...">
+								</a>
+							</div>
+							<div class="overflow-auto border border-light height200">
+								<ul>
+									<li>John Boozman</li>
+									<li>Richard M. Burr</li>
+									<li>Benjamin L. Cardin</li>
+									<li>Richard J. Durbin</li>
+									<li>Jeff Flake</li>
+									<li>Johnny Isakson</li>
+									<li>Mike Johanns</li>
+									<li>Rob Portman</li>
+									<li>Patrick J. Toomey</li>
+									<li>Kelly Ayotte</li>
+									<li>Patty Murray</li>
+									<li>Orrin G. Hatch</li>
+									<li>Robert E. Latta</li>
+									<li>William M. Thornberry</li>
+								</ul>
+							</div>
+						</div>
+
+						<p class="h5 m text-center">Schecule for the Season</p>
+						<div class="py-2 text-center">
+							<button type="button" class="btn btn-outline-dark">SEP</button>
+							<button type="button" class="btn btn-outline-dark">OCT</button>
+							<button type="button" class="btn btn-outline-dark">NOV</button>
+							<button type="button" class="btn btn-outline-dark">DIC</button>
+							<button type="button" class="btn btn-outline-dark">ENE</button>
+						</div>
+
+						<table class="w-100 table-striped table-hover text-center">
+							<p class="h6 mt-3 mb-0 text-center font-weight-lighter font-italic">Click on the match to see details</p>
+							<thead>
+								<tr>
+									<th>SEP</th>
+									<th>Teams</th>
+									<th>Venue</th>
+									<th>Times</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>9/01</td>
+									<td>U1 vs U4</td>
+									<td><a href="schedule2.html">AJ Katzenmaier</a></td>
+									<td>9:30 a.m.</td>
+								</tr>
+								<tr>
+									<td>9/01</td>
+									<td>U3 vs U2</td>
+									<td><a href="schedule2.html">Greenbay</a></td>
+									<td>1:00 p.m.</td>
+								</tr>
+								<tr>
+									<td>9/08</td>
+									<td>U5 vs U6</td>
+									<td><a href="schedule2.html">Howard A Yeager</a></td>
+									<td>9:30 a.m.</td>
+								</tr>
+								<tr>
+									<td>9/08</td>
+									<td>U6 vs U1</td>
+									<td><a href="schedule2.html">Marjorie P Hart</a></td>
+									<td>1:00 p.m.</td>
+								</tr>
+								<tr>
+									<td>9/15</td>
+									<td>U2 vs U4</td>
+									<td><a href="schedule2.html">North</a></td>
+									<td>9:30 a.m.</td>
+								</tr>
+								<tr>
+									<td>9/15</td>
+									<td>U3 vs U5</td>
+									<td><a href="schedule2.html">AJ Katzenmaier</a></td>
+									<td>1:00 p.m.</td>
+								</tr>
+								<tr>
+									<td>9/22</td>
+									<td>U1 vs U3</td>
+									<td><a href="schedule2.html">South</a></td>
+									<td>9:30 a.m.</td>
+								</tr>
+								<tr>
+									<td>9/22</td>
+									<td>U2 vs U6</td>
+									<td><a href="schedule2.html">Howard A Yeager</a></td>
+									<td>1: p.m.</td>
+								</tr>
+								<tr>
+									<td>9/29</td>
+									<td>U4 vs U5</td>
+									<td><a href="schedule2.html">Greenbay</a></td>
+									<td>9:30 a.m.</td>
+								</tr>
+							</tbody>
+						</table>
+						<p class="h5 m text-center">Season Stats</p>
+						<table class="w-100 table-striped table-hover text-center">
+							<thead>
+								<tr>
+									<th>Team</th>
+									<th>Total</th>
+									<th>Wins</th>
+									<th>Losses</th>
+									<th>Points</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>U1</td>
+									<td>60</td>
+									<td>18</td>
+									<td>3</td>
+									<td>2</td>
+								</tr>
+								<tr>
+									<td>U2</td>
+									<td>60</td>
+									<td>18</td>
+									<td>3</td>
+									<td>2</td>
+								</tr>
+								<tr>
+									<td>U3</td>
+									<td>60</td>
+									<td>18</td>
+									<td>3</td>
+									<td>2</td>
+								</tr>
+								<tr>
+									<td>U4</td>
+									<td>60</td>
+									<td>18</td>
+									<td>3</td>
+									<td>2</td>
+								</tr>
+								<tr class="bg-success text-white">
+									<td>U5</td>
+									<td>60</td>
+									<td>18</td>
+									<td>3</td>
+									<td>2</td>
+								</tr>
+								<tr>
+									<td>U6</td>
+									<td>60</td>
+									<td>18</td>
+									<td>3</td>
+									<td>2</td>
+								</tr>
+								<tr>
+									<td>U7</td>
+									<td>60</td>
+									<td>18</td>
+									<td>3</td>
+									<td>2</td>
+								</tr>
+								<tr>
+									<td>U8</td>
+									<td>60</td>
+									<td>18</td>
+									<td>3</td>
+									<td>2</td>
+								</tr>
+								<tr>
+									<td>U9</td>
+									<td>60</td>
+									<td>18</td>
+									<td>3</td>
+									<td>2</td>
+								</tr>
+								<tr>
+									<td>U10</td>
+									<td>60</td>
+									<td>18</td>
+									<td>3</td>
+									<td>2</td>
+								</tr>
+								<tr>
+									<td>U11</td>
+									<td>60</td>
+									<td>18</td>
+									<td>3</td>
+									<td>2</td>
+								</tr>
+								<tr>
+									<td>U12</td>
+									<td>60</td>
+									<td>18</td>
+									<td>3</td>
+									<td>2</td>
+								</tr>
+								<tr>
+									<td>U13</td>
+									<td>60</td>
+									<td>18</td>
+									<td>3</td>
+									<td>2</td>
+								</tr>
+								<tr>
+									<td>U14</td>
+									<td>60</td>
+									<td>18</td>
+									<td>3</td>
+									<td>2</td>
+								</tr>
+								<tr>
+									<td>U15</td>
+									<td>60</td>
+									<td>18</td>
+									<td>3</td>
+									<td>2</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<!--				*****************DIV*****************-->
+					<div v-show="ok">
+						<form class="px-4 py-3">
+							<div class="form-group">
+								<label for="exampleDropdownFormEmail1">Email address</label>
+								<input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="email@example.com">
+							</div>
+							<div class="form-group">
+								<label for="exampleDropdownFormPassword1">Password</label>
+								<input type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Password">
+							</div>
+							<div class="form-group">
+								<div class="form-check">
+									<input type="checkbox" class="form-check-input" id="dropdownCheck">
+									<label class="form-check-label" for="dropdownCheck">
+										Remember me
+									</label>
+								</div>
+							</div>
+							<button type="submit" class="btn btn-primary">Log in</button>
+						</form>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="#">New around here? Sign up</a>
+						<a class="dropdown-item" href="#">Forgot password?</a>
+					</div>
+					<!--				*****************DIV*****************-->
+					<div v-show="no">
+						<div class="text-center">
+							<h4>This is the Chat page</h4>
+							<h4>This is the Chat page</h4>
+							<h4>This is the Chat page</h4>
+						</div>
+					</div>
+					<!--				*****************DIV*****************-->
+					<div v-show="ok">
+						<div class="d-flex align-items-center my-3">
+							<span class="fas fa-envelope mx-4 emailIcon"></span>
+							<div>
+								<p class="h5">Michael Randall</p>
+								<p class="h6"><a href="mailto:michaelrandall@gmail.com">michaelrandall@gmail.com</a></p>
+							</div>
+						</div>
+						<div class="d-flex align-items-center my-3">
+							<span class="fas fa-envelope mx-4 emailIcon"></span>
+							<div>
+								<p class="h5">Tom Denton</p>
+								<p class="h6"><a href="mailto:tomdenton@gmail.com">tomdenton@gmail.com</a></p>
+							</div>
+						</div>
+					</div>
+					<!--				*****************DIV*****************-->
 				</main>
 			</div>
 		</div>
@@ -205,7 +827,7 @@
 		<div class="row">
 			<div class="col-sm">
 				<footer>
-					<p class="h6 text-center p-2 mb-5 mt-3 bg-info text-white">2019&copy; Northside Youth Soccer League</p>					
+					<p class="h6 text-center p-2 mb-5 mt-3 bg-info text-white">2019&copy; Northside Youth Soccer League</p>
 				</footer>
 			</div>
 		</div>
@@ -218,6 +840,8 @@
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+
 	<!--My Scripts-->
 	<script src="js/main.js"></script>
 </body>
