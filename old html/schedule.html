@@ -30,7 +30,7 @@
 						<div class="col-8 col-sm-8 d-flex flex-column justify-content-center">
 							<h1 class="h3 mb-2 text-center">North Youth Soccer League</h1>
 							<div class="d-flex justify-content-around">
-								<p class="h4 lead">VENUES</p>
+								<p class="h4 lead">SCHEDULE</p>
 								<div class="custom-control custom-switch">
 									<input type="checkbox" class="custom-control-input" id="customSwitch1">
 									<label class="custom-control-label" for="customSwitch1">Login</label>
@@ -71,42 +71,81 @@
 		<div class="row">
 			<div class="col-sm">
 				<main>
-					<p class="h5">GAME LOCATIONS</p>
-					<select name="state" v-model="statesFilter" id="selectDropDown">
-						<option id="allStates" value="all">AJ Katzenmaier Elementary</option>
-						<option id="allStates" value="all">Greenbay Elementary</option>
-						<option id="allStates" value="all">Howard A Yeager Elementary</option>
-						<option id="allStates" value="all">Marjorie P Hart Elementary</option>
-						<option id="allStates" value="all">North Elementary</option>
-						<option id="allStates" value="all">South Elementary</option>
-					</select>
-					
-
-					<div class="mb-5">
-						<p>24 W. Walton St., Chicago, IL 60610</p>
-						<div class="maps embed-responsive embed-responsive-1by1" id="anchor_katzenmaier">
-							<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2165.118492508806!2d-87.63092258908124!3d41.90032115714603!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x880fd34e07f69da7%3A0x15e198c063fc787c!2sAJ+Katzenmaier+Elementary!5e0!3m2!1sen!2ses!4v1542890272144"></iframe>
-						</div>
-					</div>
-					<div>
-						<p>1734 N. Orleans St., Chicago, IL 60614</p>
-						<div class="maps embed-responsive embed-responsive-1by1" id="anchor_katzenmaier">
-							<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2969.022795992249!2d-87.64002218489757!3d41.91386867115462!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x880fd3407260c45b%3A0xb351205fae50c6f3!2sGreenbay+Elementary!5e0!3m2!1sen!2ses!4v1542890628456" width="400" height="300" style="border:0" allowfullscreen></iframe>
-						</div>
-					</div>
-					<div>
-						<p>2245 N. Southport Ave., Chicago, IL 60614</p>
-						<div class="maps embed-responsive embed-responsive-1by1" id="anchor_katzenmaier">
-							<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d378805.97367068974!2d-88.03859259955114!3d42.1198553540001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x880fd2e37f852467%3A0xb6cb22b2f0358874!2sHoward+A+Yeager+Elementary!5e0!3m2!1sen!2ses!4v1542890741658" width="400" height="300" style="border:0" allowfullscreen></iframe>
-						</div>
-					</div>
-					<div>
-						<p>2625 N. Orchand St., Chicago, IL 60614</p>
-						<div class="maps embed-responsive embed-responsive-1by1" id="anchor_katzenmaier">
-							<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d378753.9213757168!2d-88.02602058880525!3d42.128561885599304!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x880fd30f2637f9d7%3A0xdbff5d5dfcfcfa35!2sMarjorie+P+Hart+Elementary!5e0!3m2!1sen!2ses!4v1542890828850" width="400" height="300" style="border:0" allowfullscreen></iframe>
-						</div>
+					<div class="py-2 text-center">
+						<button type="button" class="btn btn-outline-dark">SEP</button>
+						<button type="button" class="btn btn-outline-dark">OCT</button>
+						<button type="button" class="btn btn-outline-dark">NOV</button>
+						<button type="button" class="btn btn-outline-dark">DIC</button>
+						<button type="button" class="btn btn-outline-dark">ENE</button>
 					</div>
 
+					<table class="w-100 table-striped table-hover text-center">
+						<p class="h6 mt-3 mb-0 text-center font-weight-lighter font-italic">Click on the match to see details</p>
+						<thead>
+							<tr>
+								<th>SEP</th>
+								<th>Teams</th>
+								<th>Venue</th>
+								<th>Times</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>9/01</td>
+								<td>U1 vs U4</td>
+								<td><a href="schedule2.html">AJ Katzenmaier</a></td>
+								<td>9:30 a.m.</td>
+							</tr>
+							<tr>
+								<td>9/01</td>
+								<td>U3 vs U2</td>
+								<td><a href="schedule2.html">Greenbay</a></td>
+								<td>1:00 p.m.</td>
+							</tr>
+							<tr>
+								<td>9/08</td>
+								<td>U5 vs U6</td>
+								<td><a href="schedule2.html">Howard A Yeager</a></td>
+								<td>9:30 a.m.</td>
+							</tr>
+							<tr>
+								<td>9/08</td>
+								<td>U6 vs U1</td>
+								<td><a href="schedule2.html">Marjorie P Hart</a></td>
+								<td>1:00 p.m.</td>
+							</tr>
+							<tr>
+								<td>9/15</td>
+								<td>U2 vs U4</td>
+								<td><a href="schedule2.html">North</a></td>
+								<td>9:30 a.m.</td>
+							</tr>
+							<tr>
+								<td>9/15</td>
+								<td>U3 vs U5</td>
+								<td><a href="schedule2.html">AJ Katzenmaier</a></td>
+								<td>1:00 p.m.</td>
+							</tr>
+							<tr>
+								<td>9/22</td>
+								<td>U1 vs U3</td>
+								<td><a href="schedule2.html">South</a></td>
+								<td>9:30 a.m.</td>
+							</tr>
+							<tr>
+								<td>9/22</td>
+								<td>U2 vs U6</td>
+								<td><a href="schedule2.html">Howard A Yeager</a></td>
+								<td>1: p.m.</td>
+							</tr>
+							<tr>
+								<td>9/29</td>
+								<td>U4 vs U5</td>
+								<td><a href="schedule2.html">Greenbay</a></td>
+								<td>9:30 a.m.</td>
+							</tr>
+						</tbody>
+					</table>
 				</main>
 			</div>
 		</div>

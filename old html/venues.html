@@ -30,7 +30,7 @@
 						<div class="col-8 col-sm-8 d-flex flex-column justify-content-center">
 							<h1 class="h3 mb-2 text-center">North Youth Soccer League</h1>
 							<div class="d-flex justify-content-around">
-								<p class="h4 lead">SCHEDULE</p>
+								<p class="h4 lead">VENUES</p>
 								<div class="custom-control custom-switch">
 									<input type="checkbox" class="custom-control-input" id="customSwitch1">
 									<label class="custom-control-label" for="customSwitch1">Login</label>
@@ -38,7 +38,7 @@
 							</div>
 						</div>
 					</div>
-					
+
 					<div class="nav fixed-bottom navbar-dark bg-dark">
 						<ul class="nav mx-auto d-flex justify-content-between">
 							<li class="nav-item active">
@@ -64,22 +64,40 @@
 							</li>
 						</ul>
 					</div>
-					
+
 				</header>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-sm">
 				<main>
-					<a href="schedule.html">Link back to SCHEDULE</a>
+				<div class="text-center">
+					<p class="h5">GAME LOCATIONS</p>
+					<select name="state" v-model="statesFilter" id="selectDropDown">
+						<option id="allStates" value="all">AJ Katzenmaier Elementary</option>
+						<option id="allStates" value="all">Greenbay Elementary</option>
+						<option id="allStates" value="all">Howard A Yeager Elementary</option>
+						<option id="allStates" value="all">Marjorie P Hart Elementary</option>
+						<option id="allStates" value="all">North Elementary</option>
+						<option id="allStates" value="all">South Elementary</option>
+					</select>
+					</div>
 					
+
+					<div class="mb-1">
+						<p>24 W. Walton St., Chicago, IL 60610</p>
+						<div class="maps embed-responsive embed-responsive-1by1" id="anchor_katzenmaier">
+							<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2165.118492508806!2d-87.63092258908124!3d41.90032115714603!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x880fd34e07f69da7%3A0x15e198c063fc787c!2sAJ+Katzenmaier+Elementary!5e0!3m2!1sen!2ses!4v1542890272144"></iframe>
+						</div>
+					</div>
 				</main>
 			</div>
 		</div>
-		
+
 		<div class="row">
 			<div class="col-sm">
 				<footer>
+					<p class="h6 text-center p-2 mb-5 mt-3 bg-info text-white">2019&copy; Northside Youth Soccer League</p>
 				</footer>
 			</div>
 		</div>

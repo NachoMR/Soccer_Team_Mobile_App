@@ -20,8 +20,8 @@
 			<div class="col-sm">
 				<header>
 					<div class="row">
-						<div v-on:click="seen('home')" class="col-4 col-sm-3 d-flex justify-content-center">
-							<img class="logo" src="img/nysl_logo.png" alt="club logo">
+						<div class="col-4 col-sm-3 d-flex justify-content-center">
+							<a href="index.html"><img class="logo" src="img/nysl_logo.png" alt="club logo"></a>
 						</div>
 						<!--
 						<div class="col-1">
@@ -30,7 +30,7 @@
 						<div class="col-8 col-sm-8 d-flex flex-column justify-content-center">
 							<h1 class="h3 mb-2 text-center">North Youth Soccer League</h1>
 							<div class="d-flex justify-content-around">
-								<p class="h4 lead">{{capitalShow()}}</p>
+								<p class="h4 lead">HOME</p>
 								<div class="custom-control custom-switch">
 									<input type="checkbox" class="custom-control-input" id="customSwitch1">
 									<label class="custom-control-label" for="customSwitch1">Login</label>
@@ -39,31 +39,28 @@
 						</div>
 					</div>
 
-					<!--***************** BOTTOM NAVBAR ******************-->
 					<div class="nav fixed-bottom navbar-dark bg-dark">
 						<ul class="nav mx-auto d-flex justify-content-between">
-							<li v-on:click="seen('home')" class="nav-item active">
-								<a class="nav-link text-white" href="#">
-								<span class="fas fa-home "></span>
-								</a>
+							<li class="nav-item active">
+								<a class="nav-link text-white" href="index.html"><span class="fas fa-home"></span></a>
 							</li>
-							<li v-on:click="seen('venues')" class="nav-item active">
-								<a class="nav-link text-white" href="#"><span class="fas fa-map-marker-alt"></span></a>
+							<li class="nav-item active">
+								<a class="nav-link text-white" href="venues.html"><span class="fas fa-map-marker-alt"></span></a>
 							</li>
-							<li v-on:click="seen('schedule')" class="nav-item active">
-								<a class="nav-link text-white" href="#"><span class="fas fa-calendar-alt"></span></a>
+							<li class="nav-item active">
+								<a class="nav-link text-white" href="schedule.html"><span class="fas fa-calendar-alt"></span></a>
 							</li>
-							<li v-on:click="seen('teams')" class="nav-item active">
-								<a class="nav-link text-white" href="#"><span class="fas fa-users"></span></a>
+							<li class="nav-item active">
+								<a class="nav-link text-white" href="teams.html"><span class="fas fa-users"></span></a>
 							</li>
-							<li v-on:click="seen('login')" class="nav-item active">
-								<a class="nav-link text-white" href="#"><span class="fas fa-sign-in-alt"></span></a>
+							<li class="nav-item active">
+								<a class="nav-link text-white" href="login.html"><span class="fas fa-sign-in-alt"></span></a>
 							</li>
-							<li v-on:click="seen('chat')" class="nav-item active">
-								<a class="nav-link text-white" href="#"><span class="fas fa-comments"></span></a>
+							<li class="nav-item active">
+								<a class="nav-link text-white" href="chat.html"><span class="fas fa-comments"></span></a>
 							</li>
-							<li v-on:click="seen('email')" class="nav-item active">
-								<a class="nav-link text-white" href="#"><span class="fas fa-envelope"></span></a>
+							<li class="nav-item active">
+								<a class="nav-link text-white" href="email.html"><span class="fas fa-envelope"></span></a>
 							</li>
 						</ul>
 					</div>
@@ -74,163 +71,165 @@
 		<div class="row">
 			<div class="col-sm">
 				<main>
-					<!--				*****************DIV HOME*****************-->
-					<div v-show="show == 'home'">
-						<div><img src="img/design2_image1.jpg" class="img-fluid rounded my-2" alt="children playing soccer"></div>
-						<div>
-							<p class="h5 text-center">LASTEST UPDATES</p>
-							<p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium quam animi optio tenetur quia quaerat inventore, quod officia eligendi hic iste vero veniam quos cum architecto esse, sapiente laudantium fuga.</p>
-						</div>
-						<div class="text-center mb-3">
+					<!--				*****************DIV*****************-->
+					<div v-show="ok">
+						<div class="index">
+							<div><img src="img/design2_image1.jpg" class="img-fluid rounded my-2" alt="children playing soccer"></div>
+							<div>
+								<p class="h5 text-center">LASTEST UPDATES</p>
+								<p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium quam animi optio tenetur quia quaerat inventore, quod officia eligendi hic iste vero veniam quos cum architecto esse, sapiente laudantium fuga.</p>
+							</div>
+							<div class="text-center mb-3">
 								<p class="h5">SEASON STATS</p>
-							<select name="">
-								<option value="">Club Stats</option>
-								<option value="">Player Stats</option>
-							</select>
+								<select name="state" v-model="statesFilter" id="selectDropDown">
+									<option id="allStates" value="all">Club Stats</option>
+									<option id="allStates" value="all">Player Stats</option>
+								</select>
+							</div>
+							<table class="w-100 table-striped table-hover text-center">
+								<thead>
+									<tr>
+										<th>Team</th>
+										<th>Total</th>
+										<th>Wins</th>
+										<th>Losses</th>
+										<th>Points</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>U1</td>
+										<td>60</td>
+										<td>18</td>
+										<td>3</td>
+										<td>2</td>
+									</tr>
+									<tr>
+										<td>U2</td>
+										<td>60</td>
+										<td>18</td>
+										<td>3</td>
+										<td>2</td>
+									</tr>
+									<tr>
+										<td>U3</td>
+										<td>60</td>
+										<td>18</td>
+										<td>3</td>
+										<td>2</td>
+									</tr>
+									<tr>
+										<td>U4</td>
+										<td>60</td>
+										<td>18</td>
+										<td>3</td>
+										<td>2</td>
+									</tr>
+									<tr>
+										<td>U5</td>
+										<td>60</td>
+										<td>18</td>
+										<td>3</td>
+										<td>2</td>
+									</tr>
+									<tr>
+										<td>U6</td>
+										<td>60</td>
+										<td>18</td>
+										<td>3</td>
+										<td>2</td>
+									</tr>
+									<tr>
+										<td>U7</td>
+										<td>60</td>
+										<td>18</td>
+										<td>3</td>
+										<td>2</td>
+									</tr>
+									<tr>
+										<td>U8</td>
+										<td>60</td>
+										<td>18</td>
+										<td>3</td>
+										<td>2</td>
+									</tr>
+									<tr>
+										<td>U9</td>
+										<td>60</td>
+										<td>18</td>
+										<td>3</td>
+										<td>2</td>
+									</tr>
+									<tr>
+										<td>U10</td>
+										<td>60</td>
+										<td>18</td>
+										<td>3</td>
+										<td>2</td>
+									</tr>
+									<tr>
+										<td>U11</td>
+										<td>60</td>
+										<td>18</td>
+										<td>3</td>
+										<td>2</td>
+									</tr>
+									<tr>
+										<td>U12</td>
+										<td>60</td>
+										<td>18</td>
+										<td>3</td>
+										<td>2</td>
+									</tr>
+									<tr>
+										<td>U13</td>
+										<td>60</td>
+										<td>18</td>
+										<td>3</td>
+										<td>2</td>
+									</tr>
+									<tr>
+										<td>U14</td>
+										<td>60</td>
+										<td>18</td>
+										<td>3</td>
+										<td>2</td>
+									</tr>
+									<tr>
+										<td>U15</td>
+										<td>60</td>
+										<td>18</td>
+										<td>3</td>
+										<td>2</td>
+									</tr>
+								</tbody>
+							</table>
 						</div>
-						<table class="w-100 table-striped table-hover text-center">
-							<thead>
-								<tr>
-									<th>Team</th>
-									<th>Total</th>
-									<th>Wins</th>
-									<th>Losses</th>
-									<th>Points</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr v-on:click="seen('teams2')">
-									<td>U1Vasil</td>
-									<td>60</td>
-									<td>18</td>
-									<td>3</td>
-									<td>2</td>
-								</tr>
-								<tr v-on:click="seen('teams2')">
-									<td>U2</td>
-									<td>60</td>
-									<td>18</td>
-									<td>3</td>
-									<td>2</td>
-								</tr>
-								<tr v-on:click="seen('teams2')">
-									<td>U3</td>
-									<td>60</td>
-									<td>18</td>
-									<td>3</td>
-									<td>2</td>
-								</tr>
-								<tr v-on:click="seen('teams2')">
-									<td>U4</td>
-									<td>60</td>
-									<td>18</td>
-									<td>3</td>
-									<td>2</td>
-								</tr>
-								<tr v-on:click="seen('teams2')">
-									<td>U5</td>
-									<td>60</td>
-									<td>18</td>
-									<td>3</td>
-									<td>2</td>
-								</tr>
-								<tr v-on:click="seen('teams2')">
-									<td>U6</td>
-									<td>60</td>
-									<td>18</td>
-									<td>3</td>
-									<td>2</td>
-								</tr>
-								<tr v-on:click="seen('teams2')">
-									<td>U7</td>
-									<td>60</td>
-									<td>18</td>
-									<td>3</td>
-									<td>2</td>
-								</tr>
-								<tr v-on:click="seen('teams2')">
-									<td>U8</td>
-									<td>60</td>
-									<td>18</td>
-									<td>3</td>
-									<td>2</td>
-								</tr>
-								<tr v-on:click="seen('teams2')">
-									<td>U9</td>
-									<td>60</td>
-									<td>18</td>
-									<td>3</td>
-									<td>2</td>
-								</tr>
-								<tr v-on:click="seen('teams2')">
-									<td>U10</td>
-									<td>60</td>
-									<td>18</td>
-									<td>3</td>
-									<td>2</td>
-								</tr>
-								<tr v-on:click="seen('teams2')">
-									<td>U11</td>
-									<td>60</td>
-									<td>18</td>
-									<td>3</td>
-									<td>2</td>
-								</tr>
-								<tr v-on:click="seen('teams2')">
-									<td>U12</td>
-									<td>60</td>
-									<td>18</td>
-									<td>3</td>
-									<td>2</td>
-								</tr>
-								<tr v-on:click="seen('teams2')">
-									<td>U13</td>
-									<td>60</td>
-									<td>18</td>
-									<td>3</td>
-									<td>2</td>
-								</tr>
-								<tr v-on:click="seen('teams2')">
-									<td>U14</td>
-									<td>60</td>
-									<td>18</td>
-									<td>3</td>
-									<td>2</td>
-								</tr>
-								<tr v-on:click="seen('teams2')">
-									<td>U15</td>
-									<td>60</td>
-									<td>18</td>
-									<td>3</td>
-									<td>2</td>
-								</tr>
-							</tbody>
-						</table>
 					</div>
-					<!--				****************DIV VENUES*****************-->
-					<div v-show="show == 'venues'">
+					<!--				*****************DIV*****************-->
+					<div v-show="ok">
 						<div class="text-center">
 							<p class="h5">GAME LOCATIONS</p>
-							<select name="">
-								<option value="">AJ Katzenmaier Elementary</option>
-								<option value="">Greenbay Elementary</option>
-								<option value="">Howard A Yeager Elementary</option>
-								<option value="">Marjorie P Hart Elementary</option>
-								<option value="">North Elementary</option>
-								<option value="">South Elementary</option>
+							<select name="state" v-model="statesFilter" id="selectDropDown">
+								<option id="allStates" value="all">AJ Katzenmaier Elementary</option>
+								<option id="allStates" value="all">Greenbay Elementary</option>
+								<option id="allStates" value="all">Howard A Yeager Elementary</option>
+								<option id="allStates" value="all">Marjorie P Hart Elementary</option>
+								<option id="allStates" value="all">North Elementary</option>
+								<option id="allStates" value="all">South Elementary</option>
 							</select>
 						</div>
 
 
 						<div class="mb-1">
 							<p>24 W. Walton St., Chicago, IL 60610</p>
-							<div class="maps embed-responsive embed-responsive-1by1">
+							<div class="maps embed-responsive embed-responsive-1by1" id="anchor_katzenmaier">
 								<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2165.118492508806!2d-87.63092258908124!3d41.90032115714603!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x880fd34e07f69da7%3A0x15e198c063fc787c!2sAJ+Katzenmaier+Elementary!5e0!3m2!1sen!2ses!4v1542890272144"></iframe>
 							</div>
 						</div>
 					</div>
-					<!--				****************DIV SCHEDULE***************-->
-					<div v-show="show == 'schedule'">
+					<!--				*****************DIV*****************-->
+					<div v-show="ok">
 						<div class="py-2 text-center">
 							<button type="button" class="btn btn-outline-dark">SEP</button>
 							<button type="button" class="btn btn-outline-dark">OCT</button>
@@ -250,65 +249,65 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr v-on:click="seen('schedule2')">
+								<tr>
 									<td>9/01</td>
 									<td>U1 vs U4</td>
-									<td>AJ Katzenmaier</td>
+									<td><a href="schedule2.html">AJ Katzenmaier</a></td>
 									<td>9:30 a.m.</td>
 								</tr>
-								<tr v-on:click="seen('schedule2')">
+								<tr>
 									<td>9/01</td>
 									<td>U3 vs U2</td>
-									<td>Greenbay</td>
+									<td><a href="schedule2.html">Greenbay</a></td>
 									<td>1:00 p.m.</td>
 								</tr>
-								<tr v-on:click="seen('schedule2')">
+								<tr>
 									<td>9/08</td>
 									<td>U5 vs U6</td>
-									<td>Howard A Yeager</td>
+									<td><a href="schedule2.html">Howard A Yeager</a></td>
 									<td>9:30 a.m.</td>
 								</tr>
-								<tr v-on:click="seen('schedule2')">
+								<tr>
 									<td>9/08</td>
 									<td>U6 vs U1</td>
-									<td>Marjorie P Hart</td>
+									<td><a href="schedule2.html">Marjorie P Hart</a></td>
 									<td>1:00 p.m.</td>
 								</tr>
-								<tr v-on:click="seen('schedule2')">
+								<tr>
 									<td>9/15</td>
 									<td>U2 vs U4</td>
-									<td>North</td>
+									<td><a href="schedule2.html">North</a></td>
 									<td>9:30 a.m.</td>
 								</tr>
-								<tr v-on:click="seen('schedule2')">
+								<tr>
 									<td>9/15</td>
 									<td>U3 vs U5</td>
-									<td>AJ Katzenmaier</td>
+									<td><a href="schedule2.html">AJ Katzenmaier</a></td>
 									<td>1:00 p.m.</td>
 								</tr>
-								<tr v-on:click="seen('schedule2')">
+								<tr>
 									<td>9/22</td>
 									<td>U1 vs U3</td>
-									<td>South</td>
+									<td><a href="schedule2.html">South</a></td>
 									<td>9:30 a.m.</td>
 								</tr>
-								<tr v-on:click="seen('schedule2')">
+								<tr>
 									<td>9/22</td>
 									<td>U2 vs U6</td>
-									<td>Howard A Yeager</td>
+									<td><a href="schedule2.html">Howard A Yeager</a></td>
 									<td>1: p.m.</td>
 								</tr>
-								<tr v-on:click="seen('schedule2')">
+								<tr>
 									<td>9/29</td>
 									<td>U4 vs U5</td>
-									<td>Greenbay</td>
+									<td><a href="schedule2.html">Greenbay</a></td>
 									<td>9:30 a.m.</td>
 								</tr>
 							</tbody>
 						</table>
 					</div>
-					<!--				***************DIV SCHEDULE-2**************-->
-					<div v-show="show == 'schedule2'">
+					<!--				*****************DIV*****************-->
+					<div v-show="ok">
 						<p class="h5 text-center mb-3">Team U4 vs U2</p>
 
 						<div class="d-flex flex-column align-items-center">
@@ -327,17 +326,21 @@
 						</div>
 
 						<div class="d-flex flex-wrap justify-content-between">
-							<div v-on:click="seen('teams2')" class="teams_width my-2">
+							<div class="teams_width my-2">
+								<a href="teams2.html">
 									<img src="img/team1.JPG" class="card-img-top" alt="...">
 									<p class="card-title h6 text-center">U2</p>
+								</a>
 							</div>
-							<div v-on:click="seen('teams2')" class="teams_width my-2">
+							<div class="teams_width my-2">
+								<a href="teams2.html">
 									<img src="img/team2.JPG" class="card-img-top" alt="...">
 									<p class="card-title h6 text-center">U2</p>
+								</a>
 							</div>
 						</div>
 						<div class="d-flex justify-content-around mb-3">
-							<div class="overflow-auto border border-light height200">
+							<div style="height: 200px" class="overflow-auto border border-light">
 								<ul>
 									<li>John Boozman</li>
 									<li>Richard M. Burr</li>
@@ -355,7 +358,7 @@
 									<li>William M. Thornberry</li>
 								</ul>
 							</div>
-							<div class="overflow-auto border border-light height200">
+							<div style="height: 200px" class="overflow-auto border border-light">
 								<ul>
 									<li>John Boozman</li>
 									<li>Richard M. Burr</li>
@@ -494,47 +497,63 @@
 							</tbody>
 						</table>
 					</div>
-					<!--				*****************DIV TEAMS****************-->
-					<div v-show="show == 'teams'">
+					<!--				*****************DIV*****************-->
+					<div v-show="ok">
 						<div class="d-flex flex-wrap justify-content-between">
-							<div v-on:click="seen('teams2')" class="teams_width my-2">
+							<div class="teams_width my-2">
+								<a href="teams2.html">
 									<img src="img/team1.JPG" class="card-img-top" alt="...">
 									<p class="card-title h6 text-center">U2</p>
+								</a>
 							</div>
-							<div v-on:click="seen('teams2')" class="teams_width my-2">
+							<div class="teams_width my-2">
+								<a href="teams2.html">
 									<img src="img/team2.JPG" class="card-img-top" alt="...">
 									<p class="card-title h6 text-center">U2</p>
+								</a>
 							</div>
-							<div v-on:click="seen('teams2')" class="teams_width my-2">
+							<div class="teams_width my-2">
+								<a href="teams2.html">
 									<img src="img/team3.JPG" class="card-img-top" alt="...">
 									<p class="card-title h6 text-center">U2</p>
+								</a>
 							</div>
-							<div v-on:click="seen('teams2')" class="teams_width my-2">
+							<div class="teams_width my-2">
+								<a href="teams2.html">
 									<img src="img/team4.JPG" class="card-img-top" alt="...">
 									<p class="card-title h6 text-center">U2</p>
+								</a>
 							</div>
-							<div v-on:click="seen('teams2')" class="teams_width my-2">
+							<div class="teams_width my-2">
+								<a href="teams2.html">
 									<img src="img/team5.JPG" class="card-img-top" alt="...">
 									<p class="card-title h6 text-center">U2</p>
+								</a>
 							</div>
-							<div v-on:click="seen('teams2')" class="teams_width my-2">
+							<div class="teams_width my-2">
+								<a href="teams2.html">
 									<img src="img/team6.JPG" class="card-img-top" alt="...">
 									<p class="card-title h6 text-center">U2</p>
+								</a>
 							</div>
-							<div v-on:click="seen('teams2')" class="teams_width my-2">
+							<div class="teams_width my-2">
+								<a href="teams2.html">
 									<img src="img/team7.JPG" class="card-img-top" alt="...">
 									<p class="card-title h6 text-center">U2</p>
+								</a>
 							</div>
 						</div>
 					</div>
-					<!--				*****************DIV TEAMS-2**************-->
-					<div v-show="show == 'teams2'">
+					<!--				*****************DIV*****************-->
+					<div v-show="ok">
 						<p class="h5 text-center">Team U4</p>
 						<div class="d-flex justify-content-around align-items-center">
 							<div class="my-2">
+								<a href="teams2.html">
 									<img src="img/team1.JPG" class="teams_width" alt="...">
+								</a>
 							</div>
-							<div class="overflow-auto border border-light height200">
+							<div style="height: 200px" class="overflow-auto border border-light">
 								<ul>
 									<li>John Boozman</li>
 									<li>Richard M. Burr</li>
@@ -574,58 +593,58 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr v-on:click="seen('schedule2')">
+								<tr>
 									<td>9/01</td>
 									<td>U1 vs U4</td>
-									<td>AJ Katzenmaier</td>
+									<td><a href="schedule2.html">AJ Katzenmaier</a></td>
 									<td>9:30 a.m.</td>
 								</tr>
-								<tr v-on:click="seen('schedule2')">
+								<tr>
 									<td>9/01</td>
 									<td>U3 vs U2</td>
-									<td>Greenbay</td>
+									<td><a href="schedule2.html">Greenbay</a></td>
 									<td>1:00 p.m.</td>
 								</tr>
-								<tr v-on:click="seen('schedule2')">
+								<tr>
 									<td>9/08</td>
 									<td>U5 vs U6</td>
-									<td>Howard A Yeager</td>
+									<td><a href="schedule2.html">Howard A Yeager</a></td>
 									<td>9:30 a.m.</td>
 								</tr>
-								<tr v-on:click="seen('schedule2')">
+								<tr>
 									<td>9/08</td>
 									<td>U6 vs U1</td>
-									<td>Marjorie P Hart</td>
+									<td><a href="schedule2.html">Marjorie P Hart</a></td>
 									<td>1:00 p.m.</td>
 								</tr>
-								<tr v-on:click="seen('schedule2')">
+								<tr>
 									<td>9/15</td>
 									<td>U2 vs U4</td>
-									<td>North</td>
+									<td><a href="schedule2.html">North</a></td>
 									<td>9:30 a.m.</td>
 								</tr>
-								<tr v-on:click="seen('schedule2')">
+								<tr>
 									<td>9/15</td>
 									<td>U3 vs U5</td>
-									<td>AJ Katzenmaier</td>
+									<td><a href="schedule2.html">AJ Katzenmaier</a></td>
 									<td>1:00 p.m.</td>
 								</tr>
-								<tr v-on:click="seen('schedule2')">
+								<tr>
 									<td>9/22</td>
 									<td>U1 vs U3</td>
-									<td>South</td>
+									<td><a href="schedule2.html">South</a></td>
 									<td>9:30 a.m.</td>
 								</tr>
-								<tr v-on:click="seen('schedule2')">
+								<tr>
 									<td>9/22</td>
 									<td>U2 vs U6</td>
-									<td>Howard A Yeager</td>
+									<td><a href="schedule2.html">Howard A Yeager</a></td>
 									<td>1: p.m.</td>
 								</tr>
-								<tr v-on:click="seen('schedule2')">
+								<tr>
 									<td>9/29</td>
 									<td>U4 vs U5</td>
-									<td>Greenbay</td>
+									<td><a href="schedule2.html">Greenbay</a></td>
 									<td>9:30 a.m.</td>
 								</tr>
 							</tbody>
@@ -750,8 +769,8 @@
 							</tbody>
 						</table>
 					</div>
-					<!--				*****************DIV LOGIN*****************-->
-					<div v-show="show == 'login'">
+					<!--				*****************DIV*****************-->
+					<div v-show="ok">
 						<form class="px-4 py-3">
 							<div class="form-group">
 								<label for="exampleDropdownFormEmail1">Email address</label>
@@ -773,27 +792,27 @@
 						</form>
 						<div class="dropdown-divider"></div>
 						<a class="dropdown-item" href="#">New around here? Sign up</a>
-						<a class="dropdown-item" href="mailto:abc@gmail.com">Forgot password?</a>
+						<a class="dropdown-item" href="#">Forgot password?</a>
 					</div>
-					<!--				*****************DIV CHAT*****************-->
-					<div v-show="show == 'chat'">
+					<!--				*****************DIV*****************-->
+					<div v-show="no">
 						<div class="text-center">
 							<h4>This is the Chat page</h4>
 							<h4>This is the Chat page</h4>
 							<h4>This is the Chat page</h4>
 						</div>
 					</div>
-					<!--				*****************DIV 	EMAIL*****************-->
-					<div v-show="show == 'email'">
+					<!--				*****************DIV*****************-->
+					<div v-show="ok">
 						<div class="d-flex align-items-center my-3">
-							<span class="fas fa-envelope mx-4 emailIcon"></span>
+							<span style="font-size: 2em" class="fas fa-envelope mx-4"></span>
 							<div>
 								<p class="h5">Michael Randall</p>
 								<p class="h6"><a href="mailto:michaelrandall@gmail.com">michaelrandall@gmail.com</a></p>
 							</div>
 						</div>
 						<div class="d-flex align-items-center my-3">
-							<span class="fas fa-envelope mx-4 emailIcon"></span>
+							<span style="font-size: 2em" class="fas fa-envelope mx-4"></span>
 							<div>
 								<p class="h5">Tom Denton</p>
 								<p class="h6"><a href="mailto:tomdenton@gmail.com">tomdenton@gmail.com</a></p>

@@ -29,7 +29,7 @@ h1 {
 
 @media (min-width: 576px) {
 	.teams_width {
-		width: 13rem;
+		width: 19rem;
 	}
 }
 
@@ -38,5 +38,13 @@ h1 {
 
 
 /****** Responsive Design between xs and sm ******/
+
+.emailIcon{
+	font-size: 2em;
+}
+
+.height200{
+	height: 200px;
+}
 
 /****** photos for the "teams page" ******/

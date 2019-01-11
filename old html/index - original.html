@@ -30,7 +30,7 @@
 						<div class="col-8 col-sm-8 d-flex flex-column justify-content-center">
 							<h1 class="h3 mb-2 text-center">North Youth Soccer League</h1>
 							<div class="d-flex justify-content-around">
-								<p class="h4 lead">TEAMS</p>
+								<p class="h4 lead">HOME</p>
 								<div class="custom-control custom-switch">
 									<input type="checkbox" class="custom-control-input" id="customSwitch1">
 									<label class="custom-control-label" for="customSwitch1">Login</label>
@@ -71,96 +71,19 @@
 		<div class="row">
 			<div class="col-sm">
 				<main>
-					<p class="h5 m text-center">Team U4</p>
-					<div class="d-flex">
-						<div class="teams_width my-2">
-							<a href="teams2.html">
-								<img src="img/team1.JPG" class="card-img-top" alt="...">
-							</a>
-						</div>
-						<ul>
-							<li>John Boozman</li>
-							<li>Richard M. Burr</li>
-							<li>Benjamin L. Cardin</li>
-							<li>Richard J. Durbin</li>
-							<li>Jeff Flake</li>
-							<li>Johnny Isakson</li>
-							<li>Mike Johanns</li>
-							<li>Rob Portman</li>
-							<li>Patrick J. Toomey</li>
-						</ul>
+
+					<div><img src="img/design2_image1.jpg" class="img-fluid rounded my-2" alt="children playing soccer"></div>
+					<div>
+						<p class="h5 text-center">LASTEST UPDATES</p>
+						<p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium quam animi optio tenetur quia quaerat inventore, quod officia eligendi hic iste vero veniam quos cum architecto esse, sapiente laudantium fuga.</p>
 					</div>
-
-					<p class="h5 m text-center">Schecule for the Season</p>
-
-					<table class="w-100 table-striped table-hover text-center">
-						<!--	<caption>September schedule</caption>  -->
-						<thead>
-							<tr>
-								<th>SEP</th>
-								<th>Teams</th>
-								<th>Venue</th>
-								<th>Times</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>9/01</td>
-								<td>U1 vs U4</td>
-								<td><a href="schedule2.html">AJ Katzenmaier</a></td>
-								<td>9:30 a.m.</td>
-							</tr>
-							<tr>
-								<td>9/01</td>
-								<td>U3 vs U2</td>
-								<td><a href="schedule2.html">Greenbay</a></td>
-								<td>1:00 p.m.</td>
-							</tr>
-							<tr>
-								<td>9/08</td>
-								<td>U5 vs U6</td>
-								<td><a href="schedule2.html">Howard A Yeager</a></td>
-								<td>9:30 a.m.</td>
-							</tr>
-							<tr>
-								<td>9/08</td>
-								<td>U6 vs U1</td>
-								<td><a href="schedule2.html">Marjorie P Hart</a></td>
-								<td>1:00 p.m.</td>
-							</tr>
-							<tr>
-								<td>9/15</td>
-								<td>U2 vs U4</td>
-								<td><a href="schedule2.html">North</a></td>
-								<td>9:30 a.m.</td>
-							</tr>
-							<tr>
-								<td>9/15</td>
-								<td>U3 vs U5</td>
-								<td><a href="schedule2.html">AJ Katzenmaier</a></td>
-								<td>1:00 p.m.</td>
-							</tr>
-							<tr>
-								<td>9/22</td>
-								<td>U1 vs U3</td>
-								<td><a href="schedule2.html">South</a></td>
-								<td>9:30 a.m.</td>
-							</tr>
-							<tr>
-								<td>9/22</td>
-								<td>U2 vs U6</td>
-								<td><a href="schedule2.html">Howard A Yeager</a></td>
-								<td>1: p.m.</td>
-							</tr>
-							<tr>
-								<td>9/29</td>
-								<td>U4 vs U5</td>
-								<td><a href="schedule2.html">Greenbay</a></td>
-								<td>9:30 a.m.</td>
-							</tr>
-						</tbody>
-					</table>
-					<p class="h5 m text-center">Season Stats</p>
+					<div class="text-center mb-3">
+						<p class="h5">SEASON STATS</p>
+						<select name="state" v-model="statesFilter" id="selectDropDown">
+							<option id="allStates" value="all">Club Stats</option>
+							<option id="allStates" value="all">Player Stats</option>
+						</select>
+					</div>
 					<table class="w-100 table-striped table-hover text-center">
 						<thead>
 							<tr>
@@ -279,9 +202,6 @@
 							</tr>
 						</tbody>
 					</table>
-
-
-
 				</main>
 			</div>
 		</div>
