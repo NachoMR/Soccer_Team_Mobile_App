@@ -7,8 +7,8 @@
 
 @media (min-width: 576px) {
 	.logo {
-		height: 80px;
-		width: 80px;
+		height: 70px;
+		width: 70px;
 	}
 }
 
@@ -33,18 +33,43 @@ h1 {
 	}
 }
 
+.team_logo {
+	width: 5rem;
+}
 
+@media (min-width: 576px) {
+	.team_logo {
+		width: 10rem;
+	}
+}
+
+.overflow_height {
+height: 200px;
+}
+
+@media (min-width: 576px) {
+	.overflow_height {
+		height: 350px;
+		width: 250px
+	}
+}
 
 
 
 /****** Responsive Design between xs and sm ******/
 
-.emailIcon{
+.emailIcon {
 	font-size: 2em;
 }
 
-.height200{
-	height: 200px;
+/*
+.overflow_height {
+	height: 220px;
+}
+*/
+
+ul {
+	list-style: none;
 }
 
 /****** photos for the "teams page" ******/
