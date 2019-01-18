@@ -34,12 +34,12 @@ h1 {
 }
 
 .team_logo {
-	width: 5rem;
+	width: 7rem;
 }
 
 @media (min-width: 576px) {
 	.team_logo {
-		width: 10rem;
+		width: 12rem;
 	}
 }
 

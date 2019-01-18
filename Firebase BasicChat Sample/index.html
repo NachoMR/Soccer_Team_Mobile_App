@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>Chat Example</title>
+</head>
+
+<body>
+
+	<div class="chat">
+		<div id="posts" class="box">
+			Loading posts...
+		</div>
+
+		<div class="inputs">
+			<input id="textInput" class="input" type="text" placeholder="Your message...">
+
+			<button id="login" class="button is-info">Login!</button>
+			<button id="create-post" class="button is-primary">Send</button>
+		</div>
+	</div>
+
+	<!-- REPLACE THIS CODE WITH YOURS -->
+	<!--    Done! 		-->
+
+
+	<script src="https://www.gstatic.com/firebasejs/5.8.0/firebase.js"></script>
+	<script>
+		// Initialize Firebase
+		var config = {
+			apiKey: "AIzaSyAMU8kyng3aRjaobmlgjBZYF1-2bmC7Bqc",
+			authDomain: "nysl-chat-c911d.firebaseapp.com",
+			databaseURL: "https://nysl-chat-c911d.firebaseio.com",
+			projectId: "nysl-chat-c911d",
+			storageBucket: "nysl-chat-c911d.appspot.com",
+			messagingSenderId: "896469319926"
+		};
+		firebase.initializeApp(config);
+
+	</script>
+
+
+	<script type="text/javascript" src="main_chat.js"></script>
+
+</body>
+
+</html>
