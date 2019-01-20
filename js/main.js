@@ -1,12 +1,17 @@
 Vue.component('clubs-stats', {
-	template: '<table class="w-100 table-striped table-hover text-center"><thead><tr><th>TEAM</th><th>PLAYED</th><th>WINS</th><th>LOSSES</th><th>TIES</th><th>POINTS</th></tr></thead><tbody><tr v-for="compTeam in compTeams"><td>{{ capitalize(compTeam.name) }}</td><td>{{ sumPlayed(compTeam) }}</td><td>{{ compTeam.wins.length }}</td><td>{{ compTeam.losses.length }}</td><td>{{ compTeam.ties.length }}</td><td>{{sumPoints(compTeam) }}</td></tr></tbody></table>',
-	props: ['teams_props'],
+	template: '<table class="w-100 table-striped table-hover text-center"><thead><tr><th>TEAM</th><th>PLAYED</th><th>W</th><th>L</th><th>T</th><th>POINTS</th></tr></thead><tbody><tr v-for="item in compTeams"><td>{{ capitalize(item.name) }}</td><td>{{ sumPlayed(item) }}</td><td>{{ item.wins.length }}</td><td>{{ item.losses.length }}</td><td>{{ item.ties.length }}</td><td>{{sumPoints(item) }}</td></tr></tbody></table>',
+	props: ['teams_props','active_team_props'],
 	data: function () {
 		return {
-			compTeams: this.teams_props
+			compTeams: this.teams_props,
+			compActive_team: this.active_team_props
 		}
 	},
 	methods: {
+		//  _S stands for sort
+		compTeams_S: function(){
+			return this.compTeams.sort(function(a,b){return (b.wins.length*3 + b.ties.length*1) - (a.wins.length*3 + a.ties.length*1)});
+			},
 		capitalize: function (arg) {
 			//			console.log(this.compTeams.wins.length);
 			return arg.charAt(0).toUpperCase() + arg.slice(1);
@@ -18,24 +23,31 @@ Vue.component('clubs-stats', {
 			return (arg.wins.length + arg.losses.length + arg.ties.length);
 		}
 	},
+	computed: {	}
 });
 
 Vue.component('players-stats', {
-	template: '<table class="w-100 table-striped table-hover text-center"><thead><tr><th>PLAYER</th><th>GOALS</th><th>YELLOW CARDS</th><th>RED CARDS</th><th>TEAM</th></tr></thead><tbody><tr v-for="compPlayer in compPlayers"><td>{{ compPlayer.first_name+ " " +compPlayer.second_name }}</td><td>{{ compPlayer.goals }}</td><td>{{ compPlayer.yellow_cards }}</td><td>{{ compPlayer.red_cards }}</td><td>{{ compPlayer.team }}</td></tr></tbody></table>',
+	template: '<table class="w-100 table-striped table-hover text-center"><thead><tr><th>PLAYER</th><th>GOALS</th><th>YELLOW CARDS</th><th>RED CARDS</th><th>TEAM</th></tr></thead><tbody><tr v-for="item in compPlayers"><td>{{ item.first_name+ " " +item.second_name }}</td><td>{{ item.goals }}</td><td>{{ item.yellow_cards }}</td><td>{{ item.red_cards }}</td><td>{{ item.team }}</td></tr></tbody></table>',
 	props: ['players_props'],
-	data: function () {
+	data: function(){
 		return {
 			compPlayers: this.players_props
+		}
+	},
+	methods: {
+		//   _S stands for sorted
+		compPlayers_S: function(){
+			return this.compPlayers.sort( function(a, b){return b.goals-a.goals} )
 		}
 	}
 });
 
 Vue.component('schedule-by-month', {
-	template: `<div class="py-2 text-center"><p class="h6 my-2 text-center font-weight-lighter font-italic">Select a month to display games</p><button type="button" v-on:click="seen2('sep')" class="btn btn-outline-primary">SEP</button><button type="button" v-on:click="seen2('oct')" class="btn btn-outline-primary">OCT</button><button type="button" v-on:click="seen2('nov')" class="btn btn-outline-primary">NOV</button><button type="button" v-on:click="seen2('dec')" class="btn btn-outline-primary">DIC</button><button type="button" v-on:click="seen2('jan')" class="btn btn-outline-primary">JAN</button><p class="h6 mt-3 mb-0 text-center font-weight-lighter font-italic">Click on the match to see details</p><table class="w-100 table-striped table-hover text-center"><thead><tr><th>{{capitalShow2(show2)}}</th><th>Teams</th><th>Venue</th><th>Times</th></tr></thead><tbody><tr v-for="compSched in compSchedule_S_F"><td>{{compSched.date}}</td><td>{{compSched.team1 + ' vs ' + compSched.team2}}</td><td>{{compSched.location}}</td><td>{{compSched.time}}</td></tr></tbody></table></div>`,
+	template: `<div class="py-2 text-center"><p class="h6 my-2 text-center font-weight-lighter font-italic">Select a month to display games</p><button type="button" v-on:click="seen2('sep')" class="btn btn-outline-primary">SEP</button><button type="button" v-on:click="seen2('oct')" class="btn btn-outline-primary">OCT</button><button type="button" v-on:click="seen2('nov')" class="btn btn-outline-primary">NOV</button><button type="button" v-on:click="seen2('dec')" class="btn btn-outline-primary">DIC</button><button type="button" v-on:click="seen2('jan')" class="btn btn-outline-primary">JAN</button><p class="h6 mt-3 mb-0 text-center font-weight-lighter font-italic">Click on the match to see details</p><table class="w-100 table-striped table-hover text-center"><thead><tr><th>{{capitalShow(showMonth)}}</th><th>TEAMS</th><th>VENUE</th><th>TIME</th></tr></thead><tbody><tr v-on:click="go()" v-for="compSched in compSchedule_S_F"><td ref="dateR">{{compSched.date}}</td><td ref="team1vsteam2R">{{compSched.team1 + ' vs ' + compSched.team2}}</td><td ref="locationR">{{compSched.location}}</td><td ref="timeR">{{compSched.time}}</td></tr></tbody></table></div>`,
 	props: ['schedule_props'],
 	data: function () {
 		return {
-			show2: 'sep',
+			showMonth: 'sep',
 //			compSchedule: this.schedule_props,
 			monthCode: {
 				jan: '01',
@@ -54,23 +66,28 @@ Vue.component('schedule-by-month', {
 		}
 	},
 	methods: {
-		capitalShow2: function (arg) {
+		go: function(){
+			app.show = 'my match';
+//			console.log(this.$refs.team1vsteam2R);
+			
+		},
+		capitalShow: function (arg) {
 			return arg.toUpperCase();
 		},
 		seen2: function (arg) {
-			this.show2 = arg;
+			this.showMonth = arg;
 			//			window.scrollTo(0, 0);
 		}
 	},
 	computed: {
 		compSchedule_S_F: function () {
 			//		_S_F stands for Sorted and Filtered
-			console.log('compSchedule_S_F esta funcionando');
-			console.log('show2 es: ' + this.show2);
+//			console.log('compSchedule_S_F esta funcionando');
+//			console.log('showMonth es: ' + this.showMonth);		
 			return this.compSchedule.sort(function (a, b) {
 				return new Date(a.date) - new Date(b.date)
 			}).filter((arg) => {
-				return (arg.date.substring(5, 7)) == this.monthCode[this.show2];
+				return (arg.date.substring(5, 7)) == this.monthCode[this.showMonth];
 			})
 		},
 		compSchedule: function(){
@@ -80,19 +97,67 @@ Vue.component('schedule-by-month', {
 	}
 });
 
-//Vue.component('team-members',{
-//	template: '<div class="overflow-auto border border-light overflow_height"><dl><dt>MANAGER</dt><dd>{{teams[getActiveTeamIndex].manager}}</dd><dt>CAPTAIN</dt><dd>{{getActiveCaptain()}}</dd><dt>PLAYERS</dt><dd v-for="item in getActiveTeamMembers()">{{item}}</dd></dl></div>',
-//	props: ['members_props'],
-//	data: function(){
-//		return {
-//			
-//		}
-//	},
-//	methods: {},
-//	computed: {
-//		
-//	}
-//});
+Vue.component('team-members',{
+	template: '<div class="overflow-auto border border-light overflow_dimensions"><dl><dt>MANAGER</dt><dd>{{compTeams[getTeamIndex].manager}}</dd><dt>CAPTAIN</dt><dd>{{getCaptain()}}</dd><dt>PLAYERS</dt><dd v-for="item in getTeamMembers()">{{item}}</dd></dl></div>',
+	props: ['players_props', 'teams_props', 'team_props'],
+	data: function(){
+		return {
+			compPlayers: this.players_props,
+			compTeams: this.teams_props,
+		}
+	},
+	methods: {
+		getCaptain: function (){
+			for(var i=0; i<this.compPlayers.length; i++){
+				if(this.compPlayers[i].team === this.compTeam && this.compPlayers[i].captain){
+					return this.compPlayers[i].first_name + ' ' + this.compPlayers[i].second_name;
+				}
+			}	
+		},
+		getTeamMembers: function(){
+			var arr = [];
+//			console.log('la funcion getActiveTeamMembers ha sido llamada para renderizar los miembros del activeTeam')
+			for(var i=0; i<this.compPlayers.length; i++){
+				if(this.compPlayers[i].team === this.compTeam){
+					arr.push(this.compPlayers[i].first_name + ' ' + this.compPlayers[i].second_name)
+					}
+				}
+					return arr;	
+		}
+	},
+	computed: {
+		getTeamIndex: function () {
+			switch (this.compTeam) {
+				case 'admirals':
+					return 0;
+					break;
+				case 'chiefs':
+					return 1;
+					break;
+				case 'droids':
+					return 2;
+					break;
+				case 'emperors':
+					return 3;
+					break;
+				case 'raiders':
+					return 4;
+					break;
+				case 'sandcrawlers':
+					return 5;
+					break;
+				case 'wampas':
+					return 6;
+					break;
+				default:
+					return null;
+			}
+		},
+		compTeam: function(){
+			return this.team_props;
+		}
+	}
+});
 
 
 
@@ -102,9 +167,8 @@ var app = new Vue({
 		activeChat: 'droids',
 		show: 'home',
 		activeTeam: 'admirals',
-		activeTeamIndex: null,
+		/*INUTIL ?*/activeTeamIndex: null,/* variable INUTIL ???*/
 		statistics: 'clubs',
-		/*either 'players' or 'clubs'*/
 		location: 'gre',
 		"players": [
 			{
@@ -864,16 +928,6 @@ var app = new Vue({
 						"date": "2018-07-16",
 						"goals_in_favor": 8,
 						"goals_against": 1
-        },
-					{
-						"date": "2018-02-16",
-						"goals_in_favor": 9,
-						"goals_against": 3
-        },
-					{
-						"date": "2018-09-05",
-						"goals_in_favor": 6,
-						"goals_against": 1
         }
       ],
 				"losses": [
@@ -881,10 +935,17 @@ var app = new Vue({
 						"date": "2018-11-17",
 						"goals_in_favor": 3,
 						"goals_against": 4
+        }
+      ],
+				"ties": [
+					{
+						"date": "2018-10-08",
+						"goals_in_favor": 4,
+						"goals_against": 1
         },
 					{
-						"date": "2018-12-18",
-						"goals_in_favor": 1,
+						"date": "2018-08-28",
+						"goals_in_favor": 2,
 						"goals_against": 5
         },
 					{
@@ -905,63 +966,6 @@ var app = new Vue({
 					{
 						"date": "2018-06-01",
 						"goals_in_favor": 3,
-						"goals_against": 5
-        },
-					{
-						"date": "2018-06-27",
-						"goals_in_favor": 1,
-						"goals_against": 4
-        },
-					{
-						"date": "2018-12-17",
-						"goals_in_favor": 1,
-						"goals_against": 4
-        },
-					{
-						"date": "2018-08-02",
-						"goals_in_favor": 3,
-						"goals_against": 5
-        },
-					{
-						"date": "2018-04-13",
-						"goals_in_favor": 3,
-						"goals_against": 5
-        },
-					{
-						"date": "2018-03-28",
-						"goals_in_favor": 1,
-						"goals_against": 4
-        },
-					{
-						"date": "2019-01-05",
-						"goals_in_favor": 1,
-						"goals_against": 7
-        }
-      ],
-				"ties": [
-					{
-						"date": "2018-10-08",
-						"goals_in_favor": 4,
-						"goals_against": 1
-        },
-					{
-						"date": "2018-08-28",
-						"goals_in_favor": 2,
-						"goals_against": 5
-        },
-					{
-						"date": "2018-09-02",
-						"goals_in_favor": 3,
-						"goals_against": 3
-        },
-					{
-						"date": "2018-01-20",
-						"goals_in_favor": 4,
-						"goals_against": 2
-        },
-					{
-						"date": "2018-12-09",
-						"goals_in_favor": 4,
 						"goals_against": 5
         }
       ]
@@ -1001,36 +1005,6 @@ var app = new Vue({
 						"date": "2018-10-10",
 						"goals_in_favor": 6,
 						"goals_against": 2
-        },
-					{
-						"date": "2018-04-08",
-						"goals_in_favor": 4,
-						"goals_against": 1
-        },
-					{
-						"date": "2018-04-02",
-						"goals_in_favor": 9,
-						"goals_against": 3
-        },
-					{
-						"date": "2018-03-16",
-						"goals_in_favor": 7,
-						"goals_against": 2
-        },
-					{
-						"date": "2018-12-04",
-						"goals_in_favor": 8,
-						"goals_against": 1
-        },
-					{
-						"date": "2018-12-01",
-						"goals_in_favor": 9,
-						"goals_against": 2
-        },
-					{
-						"date": "2018-08-01",
-						"goals_in_favor": 6,
-						"goals_against": 3
         }
       ],
 				"losses": [
@@ -1078,21 +1052,6 @@ var app = new Vue({
 						"date": "2018-11-22",
 						"goals_in_favor": 3,
 						"goals_against": 6
-        },
-					{
-						"date": "2018-08-11",
-						"goals_in_favor": 2,
-						"goals_against": 4
-        },
-					{
-						"date": "2019-01-15",
-						"goals_in_favor": 1,
-						"goals_against": 6
-        },
-					{
-						"date": "2018-07-27",
-						"goals_in_favor": 3,
-						"goals_against": 6
         }
       ],
 				"ties": [
@@ -1105,21 +1064,6 @@ var app = new Vue({
 						"date": "2018-01-06",
 						"goals_in_favor": 2,
 						"goals_against": 3
-        },
-					{
-						"date": "2018-04-21",
-						"goals_in_favor": 3,
-						"goals_against": 1
-        },
-					{
-						"date": "2018-06-14",
-						"goals_in_favor": 4,
-						"goals_against": 2
-        },
-					{
-						"date": "2018-10-01",
-						"goals_in_favor": 2,
-						"goals_against": 4
         }
       ]
     },
@@ -1183,11 +1127,6 @@ var app = new Vue({
 						"date": "2018-11-09",
 						"goals_in_favor": 9,
 						"goals_against": 2
-        },
-					{
-						"date": "2018-09-28",
-						"goals_in_favor": 9,
-						"goals_against": 1
         }
       ],
 				"losses": [
@@ -1210,46 +1149,6 @@ var app = new Vue({
 						"date": "2018-01-06",
 						"goals_in_favor": 2,
 						"goals_against": 4
-        },
-					{
-						"date": "2018-06-04",
-						"goals_in_favor": 1,
-						"goals_against": 7
-        },
-					{
-						"date": "2018-05-01",
-						"goals_in_favor": 1,
-						"goals_against": 4
-        },
-					{
-						"date": "2018-09-10",
-						"goals_in_favor": 3,
-						"goals_against": 4
-        },
-					{
-						"date": "2018-02-21",
-						"goals_in_favor": 1,
-						"goals_against": 6
-        },
-					{
-						"date": "2018-01-03",
-						"goals_in_favor": 3,
-						"goals_against": 6
-        },
-					{
-						"date": "2018-05-21",
-						"goals_in_favor": 3,
-						"goals_against": 6
-        },
-					{
-						"date": "2018-03-08",
-						"goals_in_favor": 2,
-						"goals_against": 6
-        },
-					{
-						"date": "2018-01-02",
-						"goals_in_favor": 3,
-						"goals_against": 6
         }
       ],
 				"ties": [
@@ -1262,21 +1161,6 @@ var app = new Vue({
 						"date": "2018-05-09",
 						"goals_in_favor": 2,
 						"goals_against": 4
-        },
-					{
-						"date": "2018-12-02",
-						"goals_in_favor": 4,
-						"goals_against": 4
-        },
-					{
-						"date": "2018-04-14",
-						"goals_in_favor": 2,
-						"goals_against": 5
-        },
-					{
-						"date": "2018-02-25",
-						"goals_in_favor": 1,
-						"goals_against": 1
         }
       ]
     },
@@ -1325,26 +1209,6 @@ var app = new Vue({
 						"date": "2018-07-12",
 						"goals_in_favor": 9,
 						"goals_against": 3
-        },
-					{
-						"date": "2018-01-22",
-						"goals_in_favor": 6,
-						"goals_against": 3
-        },
-					{
-						"date": "2019-01-10",
-						"goals_in_favor": 9,
-						"goals_against": 3
-        },
-					{
-						"date": "2018-10-05",
-						"goals_in_favor": 9,
-						"goals_against": 1
-        },
-					{
-						"date": "2019-01-16",
-						"goals_in_favor": 8,
-						"goals_against": 1
         }
       ],
 				"losses": [
@@ -1382,31 +1246,6 @@ var app = new Vue({
 						"date": "2018-05-26",
 						"goals_in_favor": 3,
 						"goals_against": 7
-        },
-					{
-						"date": "2018-08-19",
-						"goals_in_favor": 2,
-						"goals_against": 7
-        },
-					{
-						"date": "2018-10-31",
-						"goals_in_favor": 1,
-						"goals_against": 4
-        },
-					{
-						"date": "2018-02-03",
-						"goals_in_favor": 3,
-						"goals_against": 4
-        },
-					{
-						"date": "2019-01-12",
-						"goals_in_favor": 1,
-						"goals_against": 7
-        },
-					{
-						"date": "2018-06-27",
-						"goals_in_favor": 1,
-						"goals_against": 4
         }
       ],
 				"ties": [
@@ -1424,16 +1263,6 @@ var app = new Vue({
 						"date": "2018-03-11",
 						"goals_in_favor": 4,
 						"goals_against": 4
-        },
-					{
-						"date": "2018-04-06",
-						"goals_in_favor": 3,
-						"goals_against": 2
-        },
-					{
-						"date": "2018-02-07",
-						"goals_in_favor": 1,
-						"goals_against": 3
         }
       ]
     },
@@ -1482,26 +1311,6 @@ var app = new Vue({
 						"date": "2018-05-14",
 						"goals_in_favor": 9,
 						"goals_against": 2
-        },
-					{
-						"date": "2018-04-10",
-						"goals_in_favor": 5,
-						"goals_against": 3
-        },
-					{
-						"date": "2018-02-03",
-						"goals_in_favor": 9,
-						"goals_against": 1
-        },
-					{
-						"date": "2019-01-05",
-						"goals_in_favor": 5,
-						"goals_against": 1
-        },
-					{
-						"date": "2018-08-12",
-						"goals_in_favor": 4,
-						"goals_against": 3
         }
       ],
 				"losses": [
@@ -1554,45 +1363,9 @@ var app = new Vue({
 						"date": "2018-03-29",
 						"goals_in_favor": 2,
 						"goals_against": 6
-        },
-					{
-						"date": "2018-11-18",
-						"goals_in_favor": 3,
-						"goals_against": 5
-        },
-					{
-						"date": "2018-12-17",
-						"goals_in_favor": 2,
-						"goals_against": 4
         }
       ],
-				"ties": [
-					{
-						"date": "2018-11-17",
-						"goals_in_favor": 5,
-						"goals_against": 5
-        },
-					{
-						"date": "2018-01-09",
-						"goals_in_favor": 3,
-						"goals_against": 4
-        },
-					{
-						"date": "2018-01-01",
-						"goals_in_favor": 3,
-						"goals_against": 2
-        },
-					{
-						"date": "2018-05-12",
-						"goals_in_favor": 1,
-						"goals_against": 4
-        },
-					{
-						"date": "2018-06-03",
-						"goals_in_favor": 5,
-						"goals_against": 4
-        }
-      ]
+				"ties": [{}]
     },
 			{
 				"name": "sandcrawlers",
@@ -1644,21 +1417,6 @@ var app = new Vue({
 						"date": "2018-07-24",
 						"goals_in_favor": 4,
 						"goals_against": 3
-        },
-					{
-						"date": "2018-04-09",
-						"goals_in_favor": 9,
-						"goals_against": 3
-        },
-					{
-						"date": "2018-02-13",
-						"goals_in_favor": 5,
-						"goals_against": 3
-        },
-					{
-						"date": "2018-11-02",
-						"goals_in_favor": 4,
-						"goals_against": 1
         }
       ],
 				"losses": [
@@ -1691,36 +1449,6 @@ var app = new Vue({
 						"date": "2018-02-02",
 						"goals_in_favor": 3,
 						"goals_against": 7
-        },
-					{
-						"date": "2018-02-19",
-						"goals_in_favor": 1,
-						"goals_against": 6
-        },
-					{
-						"date": "2018-08-12",
-						"goals_in_favor": 1,
-						"goals_against": 4
-        },
-					{
-						"date": "2018-01-15",
-						"goals_in_favor": 2,
-						"goals_against": 6
-        },
-					{
-						"date": "2018-10-23",
-						"goals_in_favor": 2,
-						"goals_against": 7
-        },
-					{
-						"date": "2019-01-06",
-						"goals_in_favor": 1,
-						"goals_against": 6
-        },
-					{
-						"date": "2019-01-13",
-						"goals_in_favor": 3,
-						"goals_against": 5
         }
       ],
 				"ties": [
@@ -1731,21 +1459,6 @@ var app = new Vue({
         },
 					{
 						"date": "2018-06-13",
-						"goals_in_favor": 4,
-						"goals_against": 3
-        },
-					{
-						"date": "2018-01-08",
-						"goals_in_favor": 5,
-						"goals_against": 5
-        },
-					{
-						"date": "2018-02-06",
-						"goals_in_favor": 5,
-						"goals_against": 4
-        },
-					{
-						"date": "2018-12-19",
 						"goals_in_favor": 4,
 						"goals_against": 3
         }
@@ -1796,26 +1509,6 @@ var app = new Vue({
 						"date": "2018-05-16",
 						"goals_in_favor": 4,
 						"goals_against": 3
-        },
-					{
-						"date": "2018-11-09",
-						"goals_in_favor": 4,
-						"goals_against": 2
-        },
-					{
-						"date": "2018-01-21",
-						"goals_in_favor": 6,
-						"goals_against": 2
-        },
-					{
-						"date": "2018-02-22",
-						"goals_in_favor": 4,
-						"goals_against": 3
-        },
-					{
-						"date": "2018-06-08",
-						"goals_in_favor": 8,
-						"goals_against": 1
         }
       ],
 				"losses": [
@@ -1858,26 +1551,6 @@ var app = new Vue({
 						"date": "2018-03-03",
 						"goals_in_favor": 2,
 						"goals_against": 5
-        },
-					{
-						"date": "2018-12-05",
-						"goals_in_favor": 2,
-						"goals_against": 5
-        },
-					{
-						"date": "2018-10-23",
-						"goals_in_favor": 3,
-						"goals_against": 7
-        },
-					{
-						"date": "2019-01-06",
-						"goals_in_favor": 2,
-						"goals_against": 4
-        },
-					{
-						"date": "2018-03-24",
-						"goals_in_favor": 2,
-						"goals_against": 4
         }
       ],
 				"ties": [
@@ -1885,26 +1558,6 @@ var app = new Vue({
 						"date": "2018-07-24",
 						"goals_in_favor": 2,
 						"goals_against": 3
-        },
-					{
-						"date": "2018-05-21",
-						"goals_in_favor": 5,
-						"goals_against": 1
-        },
-					{
-						"date": "2018-10-09",
-						"goals_in_favor": 2,
-						"goals_against": 2
-        },
-					{
-						"date": "2018-04-30",
-						"goals_in_favor": 3,
-						"goals_against": 3
-        },
-					{
-						"date": "2018-06-23",
-						"goals_in_favor": 4,
-						"goals_against": 1
         }
       ]
     }
@@ -2652,34 +2305,13 @@ var app = new Vue({
 		seen: function (arg, argTeam) {
 			this.show = arg;
 			this.activeTeam = argTeam;
-			
+			console.log('El app.activeTeam es: ' + this.activeTeam);
 			window.scrollTo(0, 0);
 		},
 		getMedia: function (arg){
-			console.log('la funcion getMedia esta running y recibe un argumento llamado photo');
-			console.log(this.activeTeam);
-			console.log(this.getActiveTeamIndex);
 			return this.teams[this.getActiveTeamIndex][arg];
 		},
-		getActiveCaptain: function (){
-			for(var i=0; i<this.players.length; i++){
-				if(this.players[i].team === this.activeTeam && this.players[i].captain){
-					return this.players[i].first_name + ' ' + this.players[i].second_name;
-				}
-			}	
-		},
-		getActiveTeamMembers: function(){
-			var arr = [];
-			console.log('la funcion getActiveTeamMembers ha sido llamada para renderizar los miembros del activeTeam')
-			for(var i=0; i<this.players.length; i++){
-				if(this.players[i].team === this.activeTeam){
-					arr.push(this.players[i].first_name + ' ' + this.players[i].second_name)
-					}
-				}
-					return arr;	
-		}
-	},
-	
+	},	
 	computed: {
 		gameLocation: function () {
 			switch (this.location) {
@@ -2707,8 +2339,7 @@ var app = new Vue({
 		},
 		schedule_F: function () {
 			//		_F stands for Filtered			
-			console.log('el activeTeam es: ' + this.activeTeam);
-			
+//			console.log('el activeTeam es: ' + this.activeTeam);			
 //			console.log(this.schedule.filter((arg) => {
 //				return (arg.team1 == this.activeTeam || arg.team2 == this.activeTeam);
 //			}));
@@ -2744,21 +2375,7 @@ var app = new Vue({
 				default:
 					return null;
 			}
-		},
-		
-		
-		
-		
-//		getActiveTeamMembers: function(){
-//			var arr = [];
-//			console.log('la funcion getActiveTeamMembers ha sido llamada para renderizar los miembros del activeTeam')
-//			for(var i=0; i<this.players.length; i++){
-//				if(this.players[i].team === this.activeTeam){
-//					arr.push(this.players[i].first_name + ' ' + this.players[i].second_name)
-//					}
-//				}
-//					return arr;	
-//		}
+		}
 	}
 });
 
@@ -2782,7 +2399,19 @@ function login() {
 	//
 	// How to Log In??
 	//	Either with a popup window:
-	firebase.auth().signInWithPopup(provider);
+//	firebase.auth().signInWithPopup(provider);
+	
+	firebase.auth().signInWithPopup(provider)
+		.then(function(result){
+		console.log(firebase.auth().currentUser.displayName + 'Esta ahora logeado');
+		console.log('Esta es su foto de perfil: ' + firebase.auth().currentUser.photoURL);
+		
+		
+	})
+		.catch(function(error){
+		
+	});
+	
 	// or a redirection to goggle's sign-in page:
 //		firebase.auth().signInWithRedirect(provider);
 //		firebase.auth().getRedirectResult()
@@ -2818,7 +2447,7 @@ function getPosts() {
 		//
 		var posts = document.getElementById("posts");
 		posts.innerHTML = "";
-		console.log('data.val() es:  ' + data.val());
+//		console.log('data.val() es:  ' + data.val());
 		var messages = data.val();
 		for (var key in messages) {
 			var text = document.createElement("div");
@@ -2831,7 +2460,7 @@ function getPosts() {
 		//
 	});
 
-	console.log("getting posts");
+//	console.log("getting posts");
 
 }
 

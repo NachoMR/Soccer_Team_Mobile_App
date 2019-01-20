@@ -43,17 +43,30 @@ h1 {
 	}
 }
 
-.overflow_height {
+.overflow_dimensions {
 height: 200px;
+	width: 160px;
 }
 
 @media (min-width: 576px) {
-	.overflow_height {
-		height: 350px;
+	.overflow_dimensions {
+		height: 385px;
 		width: 250px
 	}
 }
 
+.overflow_chat {
+height: 350px;
+	width: 345px;
+	background-color: beige;
+}
+
+@media (min-width: 576px) {
+	.overflow_chat {
+		height: 385px;
+		width: 250px
+	}
+}
 
 
 /****** Responsive Design between xs and sm ******/
