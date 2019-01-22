@@ -31,12 +31,13 @@
 						</div>
 						-->
 						<div class="col-8 col-sm-8 d-flex flex-column justify-content-center">
-							<h1 class="h3 mb-2 text-center">North Youth Soccer League</h1>
+							<h1 class="h3 mb-2 text-center">NorthSide Youth Soccer League</h1>
 							<div class="d-flex justify-content-around">
 								<p class="h4 lead">{{capitalShow(show)}}</p>
-								<div v-on:click="seen('chat', 'admirals')" class="custom-control custom-switch ml-auto">
-									<input type="checkbox" class="custom-control-input" id="customSwitch1">
-									<label class="custom-control-label" for="customSwitch1">Login</label>
+								<div class="custom-control custom-switch ml-auto">
+									<input id="login" v-on:click="seen('chat', 'admirals')" type="checkbox" class="custom-control-input">
+<!--									id="customSwitch1"-->
+									<label id="logInOut" class="custom-control-label" for="login">Log In</label>
 								</div>
 							</div>
 						</div>
@@ -107,7 +108,7 @@
 					<div v-show="show == 'venues'">
 						<div class="text-center">
 							<p class="h6 my-2 text-center font-weight-lighter font-italic">Select your desired Location</p>
-							<select name="location" class="mb-3" v-model="location">
+							<select name="location" class="mb-3" v-model="locationCode">
 								<option value="kat">AJ Katzenmaier Elementary</option>
 								<option value="gre">Greenbay Elementary</option>
 								<option value="how">Howard A Yeager Elementary</option>
@@ -131,190 +132,55 @@
 					</div>
 					<!--				************DIV MY MATCH***********-->
 					<div v-show="show == 'my match'">
-						<p class="h5 text-center mb-3">Team U4 vs U2</p>
+						<p class="h5 text-center mb-3">{{ matchDate.team1 }} vs {{ matchDate.team2 }}</p>
 
 						<div class="d-flex flex-column align-items-center">
 							<div class="d-flex">
 								<span class="fas fa-calendar-alt mx-3"></span>
-								<p class="h6">Date: September 01</p>
+								<p class="h6">Date: {{ matchDate.date }}</p>
 							</div>
 							<div class="d-flex">
 								<span class="far fa-clock mx-3"></span>
-								<p class="h6">Time: 9:30am</p>
+								<p class="h6">Time: {{ matchDate.time }}</p>
 							</div>
 							<div class="d-flex">
 								<span class="fas fa-map-marker-alt mx-3"></span>
-								<p class="h6">Venue: AJ Katzenmaier</p>
+								<p class="h6" v-on:click="goToVenue('venues', matchDate.location)">Venue: {{ matchDate.location }}</p>
 							</div>
 						</div>
 
 						<div class="d-flex flex-wrap justify-content-between">
 							<div v-on:click="seen('my team', 'admirals')" class="teams_width my-2">
-								<img src="img/admirals.JPG" class="card-img-top" alt="...">
-								<p class="card-title h6 text-center">U2</p>
+							
+								<img v-bind:src="getMedia('photo', matchDate.team1)" class="teams_width mb-1" alt="team1 photo">
+								<img v-bind:src="getMedia('logo', matchDate.team1)" class="teams_width mb-1" alt="team1 logo">
+							
+
+								<p class="card-title h6 text-center">{{ matchDate.team1 }}</p>
 							</div>
 							<div v-on:click="seen('my team', 'admirals')" class="teams_width my-2">
-								<img src="img/chiefs.JPG" class="card-img-top" alt="...">
-								<p class="card-title h6 text-center">U2</p>
+							
+								<img v-bind:src="getMedia('photo', matchDate.team2)" class="teams_width mb-1" alt="team2 photo">
+								<img v-bind:src="getMedia('logo', matchDate.team2)" class="teams_width mb-1" alt="team2 logo">
+							
+
+								<p class="card-title h6 text-center">{{ matchDate.team2 }}</p>
 							</div>
 						</div>
+						
 						<div class="d-flex justify-content-around mb-3">
-							<div class="overflow-auto border border-light height200">
-								<ul>
-									<li>John Boozman</li>
-									<li>Richard M. Burr</li>
-									<li>Benjamin L. Cardin</li>
-									<li>Richard J. Durbin</li>
-									<li>Jeff Flake</li>
-									<li>Johnny Isakson</li>
-									<li>Mike Johanns</li>
-									<li>Rob Portman</li>
-									<li>Patrick J. Toomey</li>
-									<li>Kelly Ayotte</li>
-									<li>Patty Murray</li>
-									<li>Orrin G. Hatch</li>
-									<li>Robert E. Latta</li>
-									<li>William M. Thornberry</li>
-								</ul>
-							</div>
-							<div class="overflow-auto border border-light height200">
-								<ul>
-									<li>John Boozman</li>
-									<li>Richard M. Burr</li>
-									<li>Benjamin L. Cardin</li>
-									<li>Richard J. Durbin</li>
-									<li>Jeff Flake</li>
-									<li>Johnny Isakson</li>
-									<li>Mike Johanns</li>
-									<li>Rob Portman</li>
-									<li>Patrick J. Toomey</li>
-									<li>Kelly Ayotte</li>
-									<li>Patty Murray</li>
-									<li>Orrin G. Hatch</li>
-									<li>Robert E. Latta</li>
-									<li>William M. Thornberry</li>
-								</ul>
-							</div>
+						
+						<team-members v-bind:players_props="players" v-bind:teams_props="teams" v-bind:team_props="matchDate.team1"></team-members>
+						
+						<team-members v-bind:players_props="players" v-bind:teams_props="teams" v-bind:team_props="matchDate.team2"></team-members>
+						
 						</div>
+						
+						
 						<p class="h5 m text-center">Season Stats</p>
-						<table class="w-100 table-striped table-hover text-center">
-							<thead>
-								<tr>
-									<th>Team</th>
-									<th>Total</th>
-									<th>Wins</th>
-									<th>Losses</th>
-									<th>Points</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>U1</td>
-									<td>60</td>
-									<td>18</td>
-									<td>3</td>
-									<td>2</td>
-								</tr>
-								<tr>
-									<td>U2</td>
-									<td>60</td>
-									<td>18</td>
-									<td>3</td>
-									<td>2</td>
-								</tr>
-								<tr class="bg-success text-white">
-									<td>U3</td>
-									<td>60</td>
-									<td>18</td>
-									<td>3</td>
-									<td>2</td>
-								</tr>
-								<tr>
-									<td>U4</td>
-									<td>60</td>
-									<td>18</td>
-									<td>3</td>
-									<td>2</td>
-								</tr>
-								<tr class="bg-success text-white">
-									<td>U5</td>
-									<td>60</td>
-									<td>18</td>
-									<td>3</td>
-									<td>2</td>
-								</tr>
-								<tr>
-									<td>U6</td>
-									<td>60</td>
-									<td>18</td>
-									<td>3</td>
-									<td>2</td>
-								</tr>
-								<tr>
-									<td>U7</td>
-									<td>60</td>
-									<td>18</td>
-									<td>3</td>
-									<td>2</td>
-								</tr>
-								<tr>
-									<td>U8</td>
-									<td>60</td>
-									<td>18</td>
-									<td>3</td>
-									<td>2</td>
-								</tr>
-								<tr>
-									<td>U9</td>
-									<td>60</td>
-									<td>18</td>
-									<td>3</td>
-									<td>2</td>
-								</tr>
-								<tr>
-									<td>U10</td>
-									<td>60</td>
-									<td>18</td>
-									<td>3</td>
-									<td>2</td>
-								</tr>
-								<tr>
-									<td>U11</td>
-									<td>60</td>
-									<td>18</td>
-									<td>3</td>
-									<td>2</td>
-								</tr>
-								<tr>
-									<td>U12</td>
-									<td>60</td>
-									<td>18</td>
-									<td>3</td>
-									<td>2</td>
-								</tr>
-								<tr>
-									<td>U13</td>
-									<td>60</td>
-									<td>18</td>
-									<td>3</td>
-									<td>2</td>
-								</tr>
-								<tr>
-									<td>U14</td>
-									<td>60</td>
-									<td>18</td>
-									<td>3</td>
-									<td>2</td>
-								</tr>
-								<tr>
-									<td>U15</td>
-									<td>60</td>
-									<td>18</td>
-									<td>3</td>
-									<td>2</td>
-								</tr>
-							</tbody>
-						</table>
+						
+						<clubs-stats v-bind:teams_props="teams" v-bind:team1_props="matchDate.team1" v-bind:team2_props="matchDate.team2"></clubs-stats>
+						
 					</div>
 					<!--				**************DIV TEAMS************-->
 					<div v-show="show == 'teams'">
@@ -355,8 +221,8 @@
 						<p class="h5 text-center">{{ capitalShow(activeTeam) }}</p>
 						<div class="d-flex justify-content-between align-items-center">
 							<div class="my-3 d-flex flex-column align-items-center">
-								<img v-bind:src=" getMedia('photo') " class="teams_width mb-1" alt="team photo">
-								<img v-bind:src=" getMedia('logo') " class="team_logo" alt="team logo">
+								<img v-bind:src=" getMedia('photo', activeTeam) " class="teams_width mb-1" alt="team photo">
+								<img v-bind:src=" getMedia('logo', activeTeam) " class="team_logo" alt="team logo">
 							</div>
 
 							<!--Vue reusable component-->
@@ -372,128 +238,9 @@
 						
 						<!--Vue reusable component-->
 						<!--En este caso le quiero pasar el valor del equipo activo para poder resaltarlo de verde en la tabla-->
-						<clubs-stats v-bind:teams_props="teams" v-bind:active_team_props="activeTeam"></clubs-stats>
+						<clubs-stats v-bind:teams_props="teams" v-bind:team1_props="activeTeam"></clubs-stats>
 						
-<!--
-						<table class="w-100 table-striped table-hover text-center">
-							<thead>
-								<tr>
-									<th>Team</th>
-									<th>Total</th>
-									<th>Wins</th>
-									<th>Losses</th>
-									<th>Points</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>U1</td>
-									<td>60</td>
-									<td>18</td>
-									<td>3</td>
-									<td>2</td>
-								</tr>
-								<tr class="bg-success text-white">
-									<td>U2</td>
-									<td>60</td>
-									<td>18</td>
-									<td>3</td>
-									<td>2</td>
-								</tr>
-								<tr>
-									<td>U3</td>
-									<td>60</td>
-									<td>18</td>
-									<td>3</td>
-									<td>2</td>
-								</tr>
-								<tr>
-									<td>U4</td>
-									<td>60</td>
-									<td>18</td>
-									<td>3</td>
-									<td>2</td>
-								</tr>
-								<tr>
-									<td>U5</td>
-									<td>60</td>
-									<td>18</td>
-									<td>3</td>
-									<td>2</td>
-								</tr>
-								<tr>
-									<td>U6</td>
-									<td>60</td>
-									<td>18</td>
-									<td>3</td>
-									<td>2</td>
-								</tr>
-								<tr>
-									<td>U7</td>
-									<td>60</td>
-									<td>18</td>
-									<td>3</td>
-									<td>2</td>
-								</tr>
-								<tr>
-									<td>U8</td>
-									<td>60</td>
-									<td>18</td>
-									<td>3</td>
-									<td>2</td>
-								</tr>
-								<tr>
-									<td>U9</td>
-									<td>60</td>
-									<td>18</td>
-									<td>3</td>
-									<td>2</td>
-								</tr>
-								<tr>
-									<td>U10</td>
-									<td>60</td>
-									<td>18</td>
-									<td>3</td>
-									<td>2</td>
-								</tr>
-								<tr>
-									<td>U11</td>
-									<td>60</td>
-									<td>18</td>
-									<td>3</td>
-									<td>2</td>
-								</tr>
-								<tr>
-									<td>U12</td>
-									<td>60</td>
-									<td>18</td>
-									<td>3</td>
-									<td>2</td>
-								</tr>
-								<tr>
-									<td>U13</td>
-									<td>60</td>
-									<td>18</td>
-									<td>3</td>
-									<td>2</td>
-								</tr>
-								<tr>
-									<td>U14</td>
-									<td>60</td>
-									<td>18</td>
-									<td>3</td>
-									<td>2</td>
-								</tr>
-								<tr>
-									<td>U15</td>
-									<td>60</td>
-									<td>18</td>
-									<td>3</td>
-									<td>2</td>
-								</tr>
-							</tbody>
-						</table>
--->
+
 					</div>
 					<!--				**************DIV LOGIN************-->
 <!--
@@ -528,16 +275,16 @@
 							<div class="chat">
 							
 								<div id="posts" class="box overflow-auto  my-2 overflow_chat">
-									Loading posts...
+									Log In to Start Live Chat
 								</div>
 
 								<div class="inputs">
-								<div d-flex flex-column>
-								<div justify-content-center>
+								<div class="d-flex flex-column">
+								<div class="d-flex flex-row justify-content-around align-items-center">
 									<input id="textInput" class="input w-75" type="text" placeholder="Your message...">
 									<button id="create-post" class="btn btn-outline-primary button is-primary">Send</button>
-									</div>
-									<button id="login" class="btn btn-outline-primary button is-info">Login!</button>
+								</div>
+<!--									<button id="login" class="btn btn-outline-primary button is-info">Login!</button>-->
 									
 									</div>
 								</div>
@@ -589,13 +336,6 @@
 
 
 
-
-	<!--	Bootstrap Requirements-->
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-	<!--	VUEjs Requirements-->
-	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
 	<!--	FIREBASE Live Chat Requirements-->
 	<script src="https://www.gstatic.com/firebasejs/5.8.0/firebase.js"></script>
 	<script>
@@ -610,6 +350,13 @@
 		};
 		firebase.initializeApp(config);
 	</script>
+	<!--	Bootstrap Requirements-->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+	<!--	VUEjs Requirements-->
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+	
 
 
 
