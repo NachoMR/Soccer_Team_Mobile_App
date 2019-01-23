@@ -90,12 +90,12 @@
 			"ties": [
 				{
 					"date": "2018-10-08",
-					"goals_in_favor": 4,
+					"goals_in_favor": 1,
 					"goals_against": 1
         },
 				{
 					"date": "2018-08-28",
-					"goals_in_favor": 2,
+					"goals_in_favor": 5,
 					"goals_against": 5
         },
 				{

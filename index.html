@@ -36,7 +36,7 @@
 								<p class="h4 lead">{{capitalShow(show)}}</p>
 								<div class="custom-control custom-switch ml-auto">
 									<input id="login" v-on:click="seen('chat', 'admirals')" type="checkbox" class="custom-control-input">
-<!--									id="customSwitch1"-->
+									<!--									id="customSwitch1"-->
 									<label id="logInOut" class="custom-control-label" for="login">Log In</label>
 								</div>
 							</div>
@@ -59,7 +59,7 @@
 							<li v-on:click="seen('teams', 'admirals')" class="nav-item active">
 								<a class="nav-link text-white" href="#"><span class="fas fa-users"></span></a>
 							</li>
-<!--
+							<!--
 							<li v-on:click="seen('login', 'admirals')" class="nav-item active">
 								<a class="nav-link text-white" href="#"><span class="fas fa-sign-in-alt"></span></a>
 							</li>
@@ -78,172 +78,196 @@
 
 		<div class="row">
 			<div class="col-sm">
-				<main>
-					<!--				**************DIV HOME*************-->
-					<div v-show="show == 'home'">
-						<div><img src="img/home_image.jpg" class="img-fluid rounded my-2" alt="children playing soccer">
+				<div id="loader" v-if="(schedule.length == 0 || players.length == 0 || teams.length == 0 || maps.length == 0)">
+
+					<div class="lds-spinner">
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+					</div>
+				</div>
+				<div v-else>
+					<main>
+						<!--				**************DIV HOME*************-->
+						<div v-show="show == 'home'">
+							<div><img src="img/home_image.jpg" class="img-fluid rounded my-2" alt="children playing soccer">
+							</div>
+							<div>
+								<p class="h5 text-center text-danger">LASTEST UPDATES</p>
+								<p class="text-justify text-primary font-italic">Raiders vs Wampas on the 4th of September 2018 will take place at 19:40 instead of 20:42 at the North Elementary field </p>
+							</div>
+							<div class="text-center mb-3">
+								<p class="h5">SEASON STATS</p>
+								<select name="stats" v-model="statistics">
+									<option value="clubs">Club Stats</option>
+									<option value="players">Player Stats</option>
+								</select>
+							</div>
+							<div v-show="statistics == 'clubs'">
+								<!--Vue reusable component-->
+								<clubs-stats v-bind:teams_props="teams"></clubs-stats>
+							</div>
+							<div v-show="statistics == 'players'">
+								<!--Vue reusable component-->
+								<players-stats v-bind:players_props="players"></players-stats>
+							</div>
+
 						</div>
-						<div>
-							<p class="h5 text-center text-danger">LASTEST UPDATES</p>
-							<p class="text-justify text-primary font-italic">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium quam animi optio tenetur quia quaerat inventore, quod officia eligendi hic iste vero veniam quos cum architecto esse, sapiente laudantium fuga.</p>
+						<!--				*************DIV venues************-->
+						<div v-show="show == 'venues'">
+							<div class="text-center">
+								<p class="h6 my-2 text-center font-weight-lighter font-italic">Select your desired Location</p>
+								<select name="location" class="mb-3" v-model="locationCode">
+									<option value="kat">AJ Katzenmaier Elementary</option>
+									<option value="gre">Greenbay Elementary</option>
+									<option value="how">Howard A Yeager Elementary</option>
+									<option value="mar">Marjorie P Hart Elementary</option>
+									<option value="nor">North Elementary</option>
+									<option value="sou">South Elementary</option>
+								</select>
+							</div>
+							<div class="text-right">
+								<p>{{ gameLocation.address }}</p>
+								<div class="maps embed-responsive embed-responsive-1by1">
+									<iframe v-bind:src="gameLocation.frame"></iframe>
+								</div>
+							</div>
 						</div>
-						<div class="text-center mb-3">
-							<p class="h5">SEASON STATS</p>
-							<select name="stats" v-model="statistics">
-								<option value="clubs">Club Stats</option>
-								<option value="players">Player Stats</option>
-							</select>
-						</div>
-						<div v-show="statistics == 'clubs'">
-						 <!--Vue reusable component-->
-						 <clubs-stats v-bind:teams_props="teams"></clubs-stats>
-						</div>
-						<div v-show="statistics == 'players'">
+						<!--				*************DIV SCHEDULE**********-->
+						<div v-show="show == 'schedule'">
 							<!--Vue reusable component-->
-							<players-stats v-bind:players_props="players"></players-stats>
-						</div>
+							<schedule-by-month v-bind:schedule_props="schedule"></schedule-by-month>
 
-					</div>
-					<!--				*************DIV venues************-->
-					<div v-show="show == 'venues'">
-						<div class="text-center">
-							<p class="h6 my-2 text-center font-weight-lighter font-italic">Select your desired Location</p>
-							<select name="location" class="mb-3" v-model="locationCode">
-								<option value="kat">AJ Katzenmaier Elementary</option>
-								<option value="gre">Greenbay Elementary</option>
-								<option value="how">Howard A Yeager Elementary</option>
-								<option value="mar">Marjorie P Hart Elementary</option>
-								<option value="nor">North Elementary</option>
-								<option value="sou">South Elementary</option>
-							</select>
 						</div>
-						<div class="text-right">
-							<p>{{ gameLocation.address }}</p>
-							<div class="maps embed-responsive embed-responsive-1by1">
-								<iframe v-bind:src="gameLocation.frame"></iframe>
+						<!--				************DIV MY MATCH***********-->
+						<div v-show="show == 'my match'">
+							<p class="h5 text-center mb-3">{{ capitalShow(matchDate.team1) }} vs {{ capitalShow(matchDate.team2) }}</p>
+
+							<div class="d-flex flex-column align-items-center">
+								<div class="d-flex">
+									<span class="fas fa-calendar-alt mx-3"></span>
+									<p class="h6">Date: {{ matchDate.date }}</p>
+								</div>
+								<div class="d-flex">
+									<span class="far fa-clock mx-3"></span>
+									<p class="h6">Time: {{ matchDate.time }}</p>
+								</div>
+								<div class="d-flex">
+									<span class="fas fa-map-marker-alt mx-3"></span>
+									<p class="h6" v-on:click="goToVenue('venues', matchDate.location)">Venue: {{ capitalShow(matchDate.location) }}</p>
+								</div>
 							</div>
+
+							<div class="d-flex flex-wrap justify-content-between">
+								<div v-on:click="seen('my team', matchDate.team1)" class="teams_width my-2">
+									<p class="h5 card-title text-center">{{ capitalShow(matchDate.team1) }}</p>
+<!--									<img v-bind:src="getMedia('photo', matchDate.team1)" class="teams_width mb-1" alt="team1 photo">-->
+									<img v-bind:src="'img/' + matchDate.team1 + '.jpg'" class="teams_width mb-1" alt="team1 photo">
+<!--									<img v-bind:src="getMedia('logo', matchDate.team1)" class="teams_width mb-1" alt="team1 logo">-->
+									<img v-bind:src="'img/' + matchDate.team1 + '_logo.jpg'" class="teams_width mb-1" alt="team1 logo">
+								</div>
+								<div v-on:click="seen('my team', matchDate.team2)" class="teams_width my-2">
+									<p class="h5 card-title text-center">{{ capitalShow(matchDate.team2) }}</p>
+<!--									<img v-bind:src="getMedia('photo', matchDate.team2)" class="teams_width mb-1" alt="team2 photo">-->
+									<img v-bind:src="'img/' + matchDate.team2 + '.jpg'" class="teams_width mb-1" alt="team2 photo">
+<!--									<img v-bind:src="getMedia('logo', matchDate.team2)" class="teams_width mb-1" alt="team2 logo">-->
+									<img v-bind:src="'img/' + matchDate.team2 + '_logo.jpg'" class="teams_width mb-1" alt="team2 logo">
+								</div>
+							</div>
+
+							<div class="d-flex justify-content-around mb-3">
+
+								<team-members v-bind:players_props="players" v-bind:teams_props="teams" v-bind:team_props="matchDate.team1"></team-members>
+
+								<team-members v-bind:players_props="players" v-bind:teams_props="teams" v-bind:team_props="matchDate.team2"></team-members>
+
+							</div>
+
+
+							<p class="h5 m text-center">Season Stats</p>
+
+							<clubs-stats v-bind:teams_props="teams" v-bind:team1_props="matchDate.team1" v-bind:team2_props="matchDate.team2"></clubs-stats>
+
 						</div>
-					</div>
-					<!--				*************DIV SCHEDULE**********-->
-					<div v-show="show == 'schedule'">
-						<!--Vue reusable component-->
-						<schedule-by-month v-bind:schedule_props="schedule"></schedule-by-month>
-
-					</div>
-					<!--				************DIV MY MATCH***********-->
-					<div v-show="show == 'my match'">
-						<p class="h5 text-center mb-3">{{ matchDate.team1 }} vs {{ matchDate.team2 }}</p>
-
-						<div class="d-flex flex-column align-items-center">
-							<div class="d-flex">
-								<span class="fas fa-calendar-alt mx-3"></span>
-								<p class="h6">Date: {{ matchDate.date }}</p>
-							</div>
-							<div class="d-flex">
-								<span class="far fa-clock mx-3"></span>
-								<p class="h6">Time: {{ matchDate.time }}</p>
-							</div>
-							<div class="d-flex">
-								<span class="fas fa-map-marker-alt mx-3"></span>
-								<p class="h6" v-on:click="goToVenue('venues', matchDate.location)">Venue: {{ matchDate.location }}</p>
-							</div>
-						</div>
-
-						<div class="d-flex flex-wrap justify-content-between">
-							<div v-on:click="seen('my team', 'admirals')" class="teams_width my-2">
+						<!--				**************DIV TEAMS************-->
+						<div v-show="show == 'teams'">
+							<p class="h6 my-2 text-center font-weight-lighter font-italic">Click on the Photo to see deails </p>
+							<div class="d-flex flex-wrap justify-content-between">
 							
-								<img v-bind:src="getMedia('photo', matchDate.team1)" class="teams_width mb-1" alt="team1 photo">
-								<img v-bind:src="getMedia('logo', matchDate.team1)" class="teams_width mb-1" alt="team1 logo">
+							<div v-for="item in teams" v-on:click="seen('my team', item.name )" class="teams_width my-2">
+									<img v-bind:src="'img/'+item.name+'.JPG'" class="card-img-top" alt="...">
+									<p class="card-title h6 text-center">{{item.name}}</p>
+								</div>
 							
-
-								<p class="card-title h6 text-center">{{ matchDate.team1 }}</p>
-							</div>
-							<div v-on:click="seen('my team', 'admirals')" class="teams_width my-2">
-							
-								<img v-bind:src="getMedia('photo', matchDate.team2)" class="teams_width mb-1" alt="team2 photo">
-								<img v-bind:src="getMedia('logo', matchDate.team2)" class="teams_width mb-1" alt="team2 logo">
-							
-
-								<p class="card-title h6 text-center">{{ matchDate.team2 }}</p>
-							</div>
-						</div>
-						
-						<div class="d-flex justify-content-around mb-3">
-						
-						<team-members v-bind:players_props="players" v-bind:teams_props="teams" v-bind:team_props="matchDate.team1"></team-members>
-						
-						<team-members v-bind:players_props="players" v-bind:teams_props="teams" v-bind:team_props="matchDate.team2"></team-members>
-						
-						</div>
-						
-						
-						<p class="h5 m text-center">Season Stats</p>
-						
-						<clubs-stats v-bind:teams_props="teams" v-bind:team1_props="matchDate.team1" v-bind:team2_props="matchDate.team2"></clubs-stats>
-						
-					</div>
-					<!--				**************DIV TEAMS************-->
-					<div v-show="show == 'teams'">
-						<p class="h6 my-2 text-center font-weight-lighter font-italic">Click on the Photo to see deails </p>
-						<div class="d-flex flex-wrap justify-content-between">
-							<div v-on:click="seen('my team', 'admirals' )" class="teams_width my-2">
-								<img src="img/admirals.JPG" class="card-img-top" alt="...">
-								<p class="card-title h6 text-center">ADMIRALS</p>
-							</div>
-							<div v-on:click="seen('my team', 'chiefs')" class="teams_width my-2">
-								<img src="img/chiefs.JPG" class="card-img-top" alt="...">
-								<p class="card-title h6 text-center">CHIEFS</p>
-							</div>
-							<div v-on:click="seen('my team', 'droids')" class="teams_width my-2">
-								<img src="img/droids.JPG" class="card-img-top" alt="...">
-								<p class="card-title h6 text-center">DROIDS</p>
-							</div>
-							<div v-on:click="seen('my team', 'emperors')" class="teams_width my-2">
-								<img src="img/emperors.JPG" class="card-img-top" alt="...">
-								<p class="card-title h6 text-center">EMPERORS</p>
-							</div>
-							<div v-on:click="seen('my team', 'wampas')" class="teams_width my-2">
-								<img src="img/wampas.JPG" class="card-img-top" alt="...">
-								<p class="card-title h6 text-center">WAMPAS</p>
-							</div>
-							<div v-on:click="seen('my team', 'raiders')" class="teams_width my-2">
-								<img src="img/raiders.JPG" class="card-img-top" alt="...">
-								<p class="card-title h6 text-center">RAIDERS</p>
-							</div>
-							<div v-on:click="seen('my team', 'sandcrawlers')" class="teams_width my-2">
-								<img src="img/sandcrawlers.JPG" class="card-img-top" alt="...">
-								<p class="card-title h6 text-center">SANDCRAWLERS</p>
-							</div>
-						</div>
-					</div>
-					<!--				**************DIV MY TEAM**********-->
-					<div v-show="show == 'my team'">
-						<p class="h5 text-center">{{ capitalShow(activeTeam) }}</p>
-						<div class="d-flex justify-content-between align-items-center">
-							<div class="my-3 d-flex flex-column align-items-center">
-								<img v-bind:src=" getMedia('photo', activeTeam) " class="teams_width mb-1" alt="team photo">
-								<img v-bind:src=" getMedia('logo', activeTeam) " class="team_logo" alt="team logo">
-							</div>
-
-							<!--Vue reusable component-->
-							<team-members v-bind:players_props="players" v-bind:teams_props="teams" v-bind:team_props="activeTeam"></team-members>
-
-						</div>
-						<p class="h5 m text-center">Schecule for the Season</p>
-
-						<!--Vue reusable component-->
-						<schedule-by-month v-bind:schedule_props="schedule_F"></schedule-by-month>
-						
-						<p class="h5 m text-center">Season Stats</p>
-						
-						<!--Vue reusable component-->
-						<!--En este caso le quiero pasar el valor del equipo activo para poder resaltarlo de verde en la tabla-->
-						<clubs-stats v-bind:teams_props="teams" v-bind:team1_props="activeTeam"></clubs-stats>
-						
-
-					</div>
-					<!--				**************DIV LOGIN************-->
 <!--
+								<div v-on:click="seen('my team', 'admirals' )" class="teams_width my-2">
+									<img src="img/admirals.JPG" class="card-img-top" alt="...">
+									<p class="card-title h6 text-center">ADMIRALS</p>
+								</div>
+								<div v-on:click="seen('my team', 'chiefs')" class="teams_width my-2">
+									<img src="img/chiefs.JPG" class="card-img-top" alt="...">
+									<p class="card-title h6 text-center">CHIEFS</p>
+								</div>
+								<div v-on:click="seen('my team', 'droids')" class="teams_width my-2">
+									<img src="img/droids.JPG" class="card-img-top" alt="...">
+									<p class="card-title h6 text-center">DROIDS</p>
+								</div>
+								<div v-on:click="seen('my team', 'emperors')" class="teams_width my-2">
+									<img src="img/emperors.JPG" class="card-img-top" alt="...">
+									<p class="card-title h6 text-center">EMPERORS</p>
+								</div>
+								<div v-on:click="seen('my team', 'wampas')" class="teams_width my-2">
+									<img src="img/wampas.JPG" class="card-img-top" alt="...">
+									<p class="card-title h6 text-center">WAMPAS</p>
+								</div>
+								<div v-on:click="seen('my team', 'raiders')" class="teams_width my-2">
+									<img src="img/raiders.JPG" class="card-img-top" alt="...">
+									<p class="card-title h6 text-center">RAIDERS</p>
+								</div>
+								<div v-on:click="seen('my team', 'sandcrawlers')" class="teams_width my-2">
+									<img src="img/sandcrawlers.JPG" class="card-img-top" alt="...">
+									<p class="card-title h6 text-center">SANDCRAWLERS</p>
+								</div>
+-->
+							</div>
+						</div>
+						<!--				**************DIV MY TEAM**********-->
+						<div v-show="show == 'my team'">
+							<p class="h5 text-center">{{ capitalShow(activeTeam) }}</p>
+							<div class="d-flex justify-content-between align-items-center">
+								<div class="my-3 d-flex flex-column align-items-center">
+									<img v-bind:src=" getMedia('photo', activeTeam) " class="teams_width mb-1" alt="team photo">
+									<img v-bind:src=" getMedia('logo', activeTeam) " class="team_logo" alt="team logo">
+								</div>
+
+								<!--Vue reusable component-->
+								<team-members v-bind:players_props="players" v-bind:teams_props="teams" v-bind:team_props="activeTeam"></team-members>
+
+							</div>
+							<p class="h5 m text-center">Schecule for the Season</p>
+
+							<!--Vue reusable component-->
+							<schedule-by-month v-bind:schedule_props="schedule_F"></schedule-by-month>
+
+							<p class="h5 m text-center">Season Stats</p>
+
+							<!--Vue reusable component-->
+							<!--En este caso le quiero pasar el valor del equipo activo para poder resaltarlo de verde en la tabla-->
+							<clubs-stats v-bind:teams_props="teams" v-bind:team1_props="activeTeam"></clubs-stats>
+
+
+						</div>
+						<!--				**************DIV LOGIN************-->
+						<!--
 					<div v-show="show == 'login'">
 						<form class="px-4 py-3">
 							<div class="form-group">
@@ -269,27 +293,27 @@
 						<a class="dropdown-item" href="mailto:abc@gmail.com">Forgot password?</a>
 					</div>
 -->
-					<!--				**************DIV CHAT*************-->
-					<div v-show="show == 'chat'">
-						<div class="text-center">
-							<div class="chat">
-							
-								<div id="posts" class="box overflow-auto  my-2 overflow_chat">
-									Log In to Start Live Chat
-								</div>
+						<!--				**************DIV CHAT*************-->
+						<div v-show="show == 'chat'">
+							<div class="text-center">
+								<div class="chat">
 
-								<div class="inputs">
-								<div class="d-flex flex-column">
-								<div class="d-flex flex-row justify-content-around align-items-center">
-									<input id="textInput" class="input w-75" type="text" placeholder="Your message...">
-									<button id="create-post" class="btn btn-outline-primary button is-primary">Send</button>
-								</div>
-<!--									<button id="login" class="btn btn-outline-primary button is-info">Login!</button>-->
-									
+									<div id="posts" class="py-2 h5 font-italic box overflow-auto  my-2 overflow_chat">
+										Log In to Start Live Chat
 									</div>
-								</div>
-								
-<!--
+
+									<div class="inputs">
+										<div class="d-flex flex-column">
+											<div class="d-flex flex-row justify-content-around align-items-center">
+												<input id="textInput" class="input w-75" type="text" placeholder="Your message...">
+												<button id="create-post" class="btn btn-outline-primary button is-primary">Send</button>
+											</div>
+											<!--									<button id="login" class="btn btn-outline-primary button is-info">Login!</button>-->
+
+										</div>
+									</div>
+
+									<!--
 								<div class="text-center">
 									<p class="h6 my-2 text-center font-weight-lighter font-italic">Select your Live Chat</p>
 									<select name="selectChat" class="mb-3" v-model="activeChat">
@@ -299,29 +323,30 @@
 									</select>									
 								</div>
 -->
-								
+
+								</div>
 							</div>
 						</div>
-					</div>
-					<!--				**************DIV 	EMAIL**********-->
-					<div v-show="show == 'email'">
-						<div class="d-flex align-items-center my-3">
-							<span class="fas fa-envelope mx-4 emailIcon"></span>
-							<div>
-								<p class="h5">Michael Randall</p>
-								<p class="h6"><a href="mailto:michaelrandall@gmail.com">michaelrandall@gmail.com</a></p>
+						<!--				**************DIV 	EMAIL**********-->
+						<div v-show="show == 'email'">
+							<div class="d-flex align-items-center my-3">
+								<span class="fas fa-envelope mx-4 emailIcon"></span>
+								<div>
+									<p class="h5">Michael Randall</p>
+									<p class="h6"><a href="mailto:michaelrandall@gmail.com">michaelrandall@gmail.com</a></p>
+								</div>
+							</div>
+							<div class="d-flex align-items-center my-3">
+								<span class="fas fa-envelope mx-4 emailIcon"></span>
+								<div>
+									<p class="h5">Tom Denton</p>
+									<p class="h6"><a href="mailto:tomdenton@gmail.com">tomdenton@gmail.com</a></p>
+								</div>
 							</div>
 						</div>
-						<div class="d-flex align-items-center my-3">
-							<span class="fas fa-envelope mx-4 emailIcon"></span>
-							<div>
-								<p class="h5">Tom Denton</p>
-								<p class="h6"><a href="mailto:tomdenton@gmail.com">tomdenton@gmail.com</a></p>
-							</div>
-						</div>
-					</div>
-					<!--				**************DIV******************-->
-				</main>
+						<!--				**************DIV******************-->
+					</main>
+				</div>
 			</div>
 		</div>
 
@@ -349,6 +374,7 @@
 			messagingSenderId: "896469319926"
 		};
 		firebase.initializeApp(config);
+
 	</script>
 	<!--	Bootstrap Requirements-->
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -356,7 +382,7 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
 	<!--	VUEjs Requirements-->
 	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
-	
+
 
 
 
