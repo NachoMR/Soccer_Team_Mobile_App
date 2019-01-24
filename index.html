@@ -114,11 +114,11 @@
 							</div>
 							<div v-show="statistics == 'clubs'">
 								<!--Vue reusable component-->
-								<clubs-stats v-bind:teams_props="teams"></clubs-stats>
+								<clubs-stats v-bind:teams_props="teams_S"></clubs-stats>
 							</div>
 							<div v-show="statistics == 'players'">
 								<!--Vue reusable component-->
-								<players-stats v-bind:players_props="players"></players-stats>
+								<players-stats v-bind:players_props="players_S"></players-stats>
 							</div>
 
 						</div>
@@ -145,7 +145,7 @@
 						<!--				*************DIV SCHEDULE**********-->
 						<div v-show="show == 'schedule'">
 							<!--Vue reusable component-->
-							<schedule-by-month v-bind:schedule_props="schedule"></schedule-by-month>
+							<schedule-by-month v-bind:schedule_props="schedule_S"></schedule-by-month>
 
 						</div>
 						<!--				************DIV MY MATCH***********-->
@@ -170,32 +170,28 @@
 							<div class="d-flex flex-wrap justify-content-between">
 								<div v-on:click="seen('my team', matchDate.team1)" class="teams_width my-2">
 									<p class="h5 card-title text-center">{{ capitalShow(matchDate.team1) }}</p>
-<!--									<img v-bind:src="getMedia('photo', matchDate.team1)" class="teams_width mb-1" alt="team1 photo">-->
 									<img v-bind:src="'img/' + matchDate.team1 + '.jpg'" class="teams_width mb-1" alt="team1 photo">
-<!--									<img v-bind:src="getMedia('logo', matchDate.team1)" class="teams_width mb-1" alt="team1 logo">-->
 									<img v-bind:src="'img/' + matchDate.team1 + '_logo.jpg'" class="teams_width mb-1" alt="team1 logo">
 								</div>
 								<div v-on:click="seen('my team', matchDate.team2)" class="teams_width my-2">
 									<p class="h5 card-title text-center">{{ capitalShow(matchDate.team2) }}</p>
-<!--									<img v-bind:src="getMedia('photo', matchDate.team2)" class="teams_width mb-1" alt="team2 photo">-->
 									<img v-bind:src="'img/' + matchDate.team2 + '.jpg'" class="teams_width mb-1" alt="team2 photo">
-<!--									<img v-bind:src="getMedia('logo', matchDate.team2)" class="teams_width mb-1" alt="team2 logo">-->
 									<img v-bind:src="'img/' + matchDate.team2 + '_logo.jpg'" class="teams_width mb-1" alt="team2 logo">
 								</div>
 							</div>
 
 							<div class="d-flex justify-content-around mb-3">
 
-								<team-members v-bind:players_props="players" v-bind:teams_props="teams" v-bind:team_props="matchDate.team1"></team-members>
+								<team-members v-bind:players_props="players_S" v-bind:teams_props="teams_S" v-bind:team_props="matchDate.team1"></team-members>
 
-								<team-members v-bind:players_props="players" v-bind:teams_props="teams" v-bind:team_props="matchDate.team2"></team-members>
+								<team-members v-bind:players_props="players_S" v-bind:teams_props="teams_S" v-bind:team_props="matchDate.team2"></team-members>
 
 							</div>
 
 
 							<p class="h5 m text-center">Season Stats</p>
 
-							<clubs-stats v-bind:teams_props="teams" v-bind:team1_props="matchDate.team1" v-bind:team2_props="matchDate.team2"></clubs-stats>
+							<clubs-stats v-bind:teams_props="teams_S" v-bind:team1_props="matchDate.team1" v-bind:team2_props="matchDate.team2"></clubs-stats>
 
 						</div>
 						<!--				**************DIV TEAMS************-->
@@ -203,41 +199,12 @@
 							<p class="h6 my-2 text-center font-weight-lighter font-italic">Click on the Photo to see deails </p>
 							<div class="d-flex flex-wrap justify-content-between">
 							
-							<div v-for="item in teams" v-on:click="seen('my team', item.name )" class="teams_width my-2">
+							<div v-for="item in teams_S" v-on:click="seen('my team', item.name )" class="teams_width my-2">
 									<img v-bind:src="'img/'+item.name+'.JPG'" class="card-img-top" alt="...">
 									<p class="card-title h6 text-center">{{item.name}}</p>
 								</div>
 							
-<!--
-								<div v-on:click="seen('my team', 'admirals' )" class="teams_width my-2">
-									<img src="img/admirals.JPG" class="card-img-top" alt="...">
-									<p class="card-title h6 text-center">ADMIRALS</p>
-								</div>
-								<div v-on:click="seen('my team', 'chiefs')" class="teams_width my-2">
-									<img src="img/chiefs.JPG" class="card-img-top" alt="...">
-									<p class="card-title h6 text-center">CHIEFS</p>
-								</div>
-								<div v-on:click="seen('my team', 'droids')" class="teams_width my-2">
-									<img src="img/droids.JPG" class="card-img-top" alt="...">
-									<p class="card-title h6 text-center">DROIDS</p>
-								</div>
-								<div v-on:click="seen('my team', 'emperors')" class="teams_width my-2">
-									<img src="img/emperors.JPG" class="card-img-top" alt="...">
-									<p class="card-title h6 text-center">EMPERORS</p>
-								</div>
-								<div v-on:click="seen('my team', 'wampas')" class="teams_width my-2">
-									<img src="img/wampas.JPG" class="card-img-top" alt="...">
-									<p class="card-title h6 text-center">WAMPAS</p>
-								</div>
-								<div v-on:click="seen('my team', 'raiders')" class="teams_width my-2">
-									<img src="img/raiders.JPG" class="card-img-top" alt="...">
-									<p class="card-title h6 text-center">RAIDERS</p>
-								</div>
-								<div v-on:click="seen('my team', 'sandcrawlers')" class="teams_width my-2">
-									<img src="img/sandcrawlers.JPG" class="card-img-top" alt="...">
-									<p class="card-title h6 text-center">SANDCRAWLERS</p>
-								</div>
--->
+
 							</div>
 						</div>
 						<!--				**************DIV MY TEAM**********-->
@@ -245,24 +212,23 @@
 							<p class="h5 text-center">{{ capitalShow(activeTeam) }}</p>
 							<div class="d-flex justify-content-between align-items-center">
 								<div class="my-3 d-flex flex-column align-items-center">
-									<img v-bind:src=" getMedia('photo', activeTeam) " class="teams_width mb-1" alt="team photo">
-									<img v-bind:src=" getMedia('logo', activeTeam) " class="team_logo" alt="team logo">
+									<img v-bind:src="'img/' + activeTeam + '.jpg'" class="teams_width mb-1" alt="team photo">
+									<img v-bind:src="'img/' + activeTeam + '_logo.jpg'" class="teams_width mb-1" alt="team photo">
 								</div>
-
 								<!--Vue reusable component-->
-								<team-members v-bind:players_props="players" v-bind:teams_props="teams" v-bind:team_props="activeTeam"></team-members>
+								<team-members v-bind:players_props="players_S" v-bind:teams_props="teams_S" v-bind:team_props="activeTeam"></team-members>
 
 							</div>
 							<p class="h5 m text-center">Schecule for the Season</p>
 
 							<!--Vue reusable component-->
-							<schedule-by-month v-bind:schedule_props="schedule_F"></schedule-by-month>
+							<schedule-by-month v-bind:schedule_props="schedule_S_F"></schedule-by-month>
 
 							<p class="h5 m text-center">Season Stats</p>
 
 							<!--Vue reusable component-->
 							<!--En este caso le quiero pasar el valor del equipo activo para poder resaltarlo de verde en la tabla-->
-							<clubs-stats v-bind:teams_props="teams" v-bind:team1_props="activeTeam"></clubs-stats>
+							<clubs-stats v-bind:teams_props="teams_S" v-bind:team1_props="activeTeam"></clubs-stats>
 
 
 						</div>

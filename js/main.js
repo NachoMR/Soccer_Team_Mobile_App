@@ -1,5 +1,5 @@
 Vue.component('clubs-stats', {
-	template: '<table class="w-100 table-striped text-center"><thead><tr><th>TEAM</th><th>PLAYED</th><th>W</th><th>L</th><th>T</th><th>POINTS</th></tr></thead><tbody><tr v-for="item in compTeams_S()" :class="{success: (item.name == team1ToCheck) || (item.name == team2ToCheck)}"><td>{{ capitalize(item.name) }}</td><td>{{ sumPlayed(item) }}</td><td>{{ item.wins.length }}</td><td>{{ item.losses.length }}</td><td>{{ item.ties.length }}</td><td>{{sumPoints(item)}}</td></tr></tbody></table>',
+	template: '<table class="w-100 table-striped text-center"><thead><tr><th>TEAM</th><th>PLAYED</th><th>W</th><th>L</th><th>T</th><th>POINTS</th></tr></thead><tbody><tr v-for="item in compTeams" :class="{success: (item.name == team1ToCheck) || (item.name == team2ToCheck)}"><td>{{ capitalize(item.name) }}</td><td>{{ sumPlayed(item) }}</td><td>{{ item.wins.length }}</td><td>{{ item.losses.length }}</td><td>{{ item.ties.length }}</td><td>{{sumPoints(item)}}</td></tr></tbody></table>',
 	props: ['teams_props', 'team1_props', 'team2_props'],
 	data: function () {
 		return {
@@ -7,7 +7,7 @@ Vue.component('clubs-stats', {
 			//compActive_team: this.team1_props
 		}
 	},
-	methods: {		
+	methods: {
 		capitalize: function (arg) {
 			//			console.log(this.compTeams.wins.length);
 			return arg.charAt(0).toUpperCase() + arg.slice(1);
@@ -17,15 +17,16 @@ Vue.component('clubs-stats', {
 		},
 		sumPlayed: function (arg) {
 			return (arg.wins.length + arg.losses.length + arg.ties.length);
-		},
-		compTeams_S: function () {
-					//  _S stands for sort
-			return this.compTeams.sort((a, b) => {
-				return this.sumPoints(b) - this.sumPoints(a);
-			});
 		}
+		//		,
+		//		compTeams_S: function () {
+		//					//  _S stands for sort
+		//			return this.compTeams.sort((a, b) => {
+		//				return this.sumPoints(b) - this.sumPoints(a);
+		//			});
+		//		}
 	},
-	computed: {		
+	computed: {
 		team1ToCheck() {
 			return this.team1_props;
 		},
@@ -36,29 +37,30 @@ Vue.component('clubs-stats', {
 });
 //*******************************************************
 Vue.component('players-stats', {
-	template: '<table class="w-100 table-striped table-hover text-center"><thead><tr><th>PLAYER</th><th>GOALS</th><th>YELLOW CARDS</th><th>RED CARDS</th><th>TEAM</th></tr></thead><tbody><tr v-for="item in compPlayers_S()"><td>{{ item.first_name+ " " +item.second_name }}</td><td>{{ item.goals }}</td><td>{{ item.yellow_cards }}</td><td>{{ item.red_cards }}</td><td>{{ item.team }}</td></tr></tbody></table>',
+	template: '<table class="w-100 table-striped table-hover text-center"><thead><tr><th>PLAYER</th><th>GOALS</th><th>YELLOW CARDS</th><th>RED CARDS</th><th>TEAM</th></tr></thead><tbody><tr v-for="item in compPlayers"><td>{{ item.first_name+ " " +item.second_name }}</td><td>{{ item.goals }}</td><td>{{ item.yellow_cards }}</td><td>{{ item.red_cards }}</td><td>{{ item.team }}</td></tr></tbody></table>',
 	props: ['players_props'],
 	data: function () {
 		return {
 			compPlayers: this.players_props
 		}
-	},
-	methods: {
-		//   _S stands for sorted
-		compPlayers_S: function () {
-			return this.compPlayers.sort(function (a, b) {
-				return b.goals - a.goals
-			})
-		}
 	}
+	//	,
+	//	methods: {
+	//		//   _S stands for sorted
+	//		compPlayers_S: function () {
+	//			return this.compPlayers.sort(function (a, b) {
+	//				return b.goals - a.goals
+	//			})
+	//		}
+	//	}
 });
 //*******************************************************
 Vue.component('schedule-by-month', {
-	template: `<div class="py-2 text-center"><p class="h6 my-2 text-center font-weight-lighter font-italic">Select a month to display games</p><button type="button" v-on:click="seen2('sep')" class="btn btn-outline-primary">SEP</button><button type="button" v-on:click="seen2('oct')" class="btn btn-outline-primary">OCT</button><button type="button" v-on:click="seen2('nov')" class="btn btn-outline-primary">NOV</button><button type="button" v-on:click="seen2('dec')" class="btn btn-outline-primary">DIC</button><button type="button" v-on:click="seen2('jan')" class="btn btn-outline-primary">JAN</button><p class="h6 mt-3 mb-0 text-center font-weight-lighter font-italic">Click on the match to see details</p><table class="w-100 table-striped table-hover text-center"><thead><tr><th>{{capitalShow(showMonth)}}</th><th>TEAMS</th><th>VENUE</th><th>TIME</th></tr></thead><tbody><tr v-for="compSched in compSchedule_S_F"  v-on:click="go(compSched)"><td>{{compSched.date}}</td><td>{{compSched.team1 + ' vs ' + compSched.team2}}</td><td>{{compSched.location}}</td><td>{{compSched.time}}</td></tr></tbody></table></div>`,
+	template: `<div class="py-2 text-center"><p class="h6 my-2 text-center font-weight-lighter font-italic">Select a month to display games</p><button type="button" v-on:click="seen2('sep')" class="btn btn-outline-primary">SEP</button><button type="button" v-on:click="seen2('oct')" class="btn btn-outline-primary">OCT</button><button type="button" v-on:click="seen2('nov')" class="btn btn-outline-primary">NOV</button><button type="button" v-on:click="seen2('dec')" class="btn btn-outline-primary">DIC</button><button type="button" v-on:click="seen2('jan')" class="btn btn-outline-primary">JAN</button><p class="h6 mt-3 mb-0 text-center font-weight-lighter font-italic">Click on the match to see details</p><table class="w-100 table-striped table-hover text-center"><thead><tr><th>{{capitalShow(showMonth)}}</th><th>TEAMS</th><th>VENUE</th><th>TIME</th></tr></thead><tbody><tr v-for="item in compSchedule_F"  v-on:click="go(item)"><td>{{item.date}}</td><td>{{item.team1 + ' vs ' + item.team2}}</td><td>{{item.location}}</td><td>{{item.time}}</td></tr></tbody></table></div>`,
 	props: ['schedule_props'],
 	data: function () {
-		
 		return {
+//			compSchedule: this.schedule_props,
 			showMonth: 'sep',
 			monthCode: {
 				jan: '01',
@@ -91,29 +93,36 @@ Vue.component('schedule-by-month', {
 		},
 		seen2: function (arg) {
 			this.showMonth = arg;
-			//			window.scrollTo(0, 0);
+			window.scrollTo(0, 0);
 		}
 	},
 	computed: {
-		compSchedule_S_F: function () {
-			//		_S_F stands for Sorted and Filtered
-			//			console.log('compSchedule_S_F esta funcionando');
-			//			console.log('showMonth es: ' + this.showMonth);		
-			return this.compSchedule.sort(function (a, b) {
-				return new Date(a.date) - new Date(b.date)
-			}).filter((arg) => {
+		compSchedule: function(){
+			return this.schedule_props;
+		},
+		compSchedule_F: function () {
+			//		_F stands for Filtered(by month)
+
+			return this.compSchedule.filter((arg) => {
 				return (arg.date.substring(5, 7)) == this.monthCode[this.showMonth];
 			})
-		},
-		compSchedule: function () {
-			return this.schedule_props;
 		}
-
 	}
+	//		compSchedule_S_F: function () {
+	//			return this.compSchedule.sort(function (a, b) {
+	//				return new Date(a.date) - new Date(b.date)
+	//			}).filter((arg) => {
+	//				return (arg.date.substring(5, 7)) == this.monthCode[this.showMonth];
+	//			})
+	//		},
+	//		compSchedule: function () {
+	//			return this.schedule_props;
+	//		}
+	//	}
 });
-//*******************************************************
+//**********The below component is not behaving properly: TeamIndex is not working properly as the switch statement is set for the sourced teams array instead of the sorte teams array************************************
 Vue.component('team-members', {
-	template: '<div class="overflow-auto border border-light overflow_dimensions"><dl><dt>MANAGER</dt><dd>{{compTeams[getTeamIndex].manager}}</dd><dt>CAPTAIN</dt><dd>{{getCaptain()}}</dd><dt>PLAYERS</dt><dd v-for="item in getTeamMembers()">{{item}}</dd></dl></div>',
+	template: '<div class="overflow-auto border border-light overflow_dimensions"><dl><dt>MANAGER</dt><dd>{{getManager()}}</dd><dt>CAPTAIN</dt><dd>{{getCaptain()}}</dd><dt>PLAYERS</dt><dd v-for="item in getTeamMembers()">{{item}}</dd></dl></div>',
 	props: ['players_props', 'teams_props', 'team_props'],
 	data: function () {
 		return {
@@ -138,39 +147,49 @@ Vue.component('team-members', {
 				}
 			}
 			return arr;
+		},
+		getManager: function () {
+			for(var i=0 ; i<this.compTeams.length; i++){
+				if(this.compTeams[i].name == this.compTeam){
+					return this.compTeams[i].manager;
+				}
+			}
 		}
 	},
 	computed: {
-		getTeamIndex: function () {
-			switch (this.compTeam) {
-				case 'admirals':
-					return 0;
-					break;
-				case 'chiefs':
-					return 1;
-					break;
-				case 'droids':
-					return 2;
-					break;
-				case 'emperors':
-					return 3;
-					break;
-				case 'raiders':
-					return 4;
-					break;
-				case 'sandcrawlers':
-					return 5;
-					break;
-				case 'wampas':
-					return 6;
-					break;
-				default:
-					return null;
-			}
-		},
 		compTeam: function () {
 			return this.team_props;
 		}
+		
+//		,
+//		getTeamIndex: function () {
+//			switch (this.compTeam) {
+//				case 'admirals':
+//					return 0;
+//					break;
+//				case 'chiefs':
+//					return 1;
+//					break;
+//				case 'droids':
+//					return 2;
+//					break;
+//				case 'emperors':
+//					return 3;
+//					break;
+//				case 'raiders':
+//					return 4;
+//					break;
+//				case 'sandcrawlers':
+//					return 5;
+//					break;
+//				case 'wampas':
+//					return 6;
+//					break;
+//				default:
+//					return null;
+//			}
+//		}
+		
 	}
 });
 //*******************************************************
@@ -197,9 +216,7 @@ var app = new Vue({
 		teams: [],
 		schedule: [],
 		maps: []
-		//		activeChat: 'droids',
-		//		activeTeamIndex: null,
-		//		loader: 'loading', //either 'loading' or 'loaded'
+		//arrays "[players]", "[teams]", "[schedule]" and "[maps]" are declared empty and filled un from FireBase inside the "created()" function below. After that we need to SORT "[teams]", "[players]" and "[schedule]" to get "[teams_S]", "[players_S]" and "[schedule_S]" and we also need to 
 
 	},
 	created() {
@@ -220,26 +237,25 @@ var app = new Vue({
 		this.getData('maps');
 	},
 	methods: {
-		getData(arg){
-				firebase.database().ref(arg).once('value', function (data) {
-					switch(arg){
-						case 'players':
-							app.players = data.val();
-							break;
-						case 'teams':
-							app.teams = data.val();
-							break;
-						case 'schedule':
-							app.schedule = data.val();
-							break;
-						case 'maps':
-							app.maps = data.val();
-							break;
-						default:
-							return alert('Error retrieving data from FIREBASE. Check the method getData() in your javascript!!');
-					}				
+		getData(arg) {
+			firebase.database().ref(arg).once('value', function (data) {
+				switch (arg) {
+					case 'players':
+						app.players = data.val();
+						break;
+					case 'teams':
+						app.teams = data.val();
+						break;
+					case 'schedule':
+						app.schedule = data.val();
+						break;
+					case 'maps':
+						app.maps = data.val();
+						break;
+					default:
+						return alert('Error retrieving data from FIREBASE. Check the method getData() in your javascript!!');
 				}
-			)
+			})
 		},
 		capitalShow: function (arg) {
 			return arg.toUpperCase();
@@ -250,41 +266,11 @@ var app = new Vue({
 			console.log('El app.activeTeam es: ' + this.activeTeam);
 			window.scrollTo(0, 0);
 		},
-		getMedia: function (arg1, arg2) {
-			return this.teams[this.getTeamIndex(arg2)][arg1];
-		},
-		getTeamIndex: function (arg) {
-			switch (arg) {
-				case 'admirals':
-					return 0;
-					break;
-				case 'chiefs':
-					return 1;
-					break;
-				case 'droids':
-					return 2;
-					break;
-				case 'emperors':
-					return 3;
-					break;
-				case 'raiders':
-					return 4;
-					break;
-				case 'sandcrawlers':
-					return 5;
-					break;
-				case 'wampas':
-					return 6;
-					break;
-				default:
-					return null;
-			}
-		},
-		goToVenue: function (arg1, arg2){
+		goToVenue: function (arg1, arg2) {
 			this.show = arg1;
 			this.locationCode = this.getVenueCode(arg2);
 		},
-		getVenueCode: function(arg){
+		getVenueCode: function (arg) {
 			switch (arg) {
 				case 'AJ Katzenmaier Elementary':
 					return 'kat';
@@ -310,6 +296,31 @@ var app = new Vue({
 		}
 	},
 	computed: {
+		teams_S: function () {
+			//		_S stands for Sorted
+			return this.teams.sort((a, b) => {
+				return (b.wins.length * 3 + b.ties.length * 1) - (a.wins.length * 3 + a.ties.length * 1)
+			});
+		},
+		players_S: function () {
+			//		_S stands for Sorted
+			return this.players.sort((a, b) => {
+				return (b.goals) - (a.goals)
+			});
+		},
+		schedule_S: function () {
+			//		_S stands for Sorted
+			return this.schedule.sort(function (a, b) {
+				return new Date(a.date) - new Date(b.date)
+			})
+		},
+		schedule_S_F: function () {
+			//		_S stands for Sorted
+			//		_F stands for Filtered(by activeTeam)
+			return this.schedule_S.filter((arg) => {
+				return (arg.team1 == this.activeTeam || arg.team2 == this.activeTeam);
+			})
+		},
 		gameLocation: function () {
 			switch (this.locationCode) {
 				case 'kat':
@@ -333,12 +344,6 @@ var app = new Vue({
 				default:
 					return 'error';
 			}
-		},
-		schedule_F: function () {
-			//		_F stands for Filtered
-			return this.schedule.filter((arg) => {
-				return (arg.team1 == this.activeTeam || arg.team2 == this.activeTeam);
-			})
 		}
 	}
 });
@@ -349,11 +354,11 @@ var app = new Vue({
 // *****************--FIREBASE LIVE CHAT--********************
 
 //waiting for data to be loaded from "created" so I need an if to check on it
-if(app.schedule.length != 0 || app.players.length != 0 || app.teams.length != 0 || app.maps.length != 0){
+if (app.schedule.length != 0 || app.players.length != 0 || app.teams.length != 0 || app.maps.length != 0) {
 	console.log('Leyendo eventListeners del chat...');
 	document.getElementById("login").addEventListener("click", login);
 	document.getElementById("create-post").addEventListener("click", writeNewPost);
-	};
+};
 
 //getPosts();
 
@@ -368,7 +373,7 @@ function login() {
 	//	firebase.auth().signInWithPopup(provider);
 
 	if (firebase.auth().currentUser == null) {
-				alert('You are about to log in');
+		alert('You are about to log in');
 		//	document.getElementById("login").checked = false;
 
 		firebase.auth().signInWithPopup(provider)
@@ -384,7 +389,7 @@ function login() {
 				alert('SignIn failed... Try again');
 			});
 	} else {
-					alert('You are about to log out');
+		alert('You are about to log out');
 		//		document.getElementById("login").checked = true;
 
 		firebase.auth().signOut()
