@@ -35,7 +35,7 @@
 							<div class="d-flex justify-content-around">
 								<p class="h4 lead">{{capitalShow(show)}}</p>
 								<div class="custom-control custom-switch ml-auto">
-									<input id="login" v-on:click="seen('chat', 'admirals')" type="checkbox" class="custom-control-input">
+									<input id="login" v-on:click="handler('chat', 'admirals')" type="checkbox" class="custom-control-input">
 									<!--									id="customSwitch1"-->
 									<label id="logInOut" class="custom-control-label" for="login">Log In</label>
 								</div>
@@ -272,7 +272,7 @@
 										<div class="d-flex flex-column">
 											<div class="d-flex flex-row justify-content-around align-items-center">
 												<input id="textInput" class="input w-75" type="text" placeholder="Your message...">
-												<button id="create-post" class="btn btn-outline-primary button is-primary">Send</button>
+												<button v-on:click="writeNewPost()" id="create-post" class="btn btn-outline-primary button is-primary">Send</button>
 											</div>
 											<!--									<button id="login" class="btn btn-outline-primary button is-info">Login!</button>-->
 

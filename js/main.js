@@ -60,7 +60,7 @@ Vue.component('schedule-by-month', {
 	props: ['schedule_props'],
 	data: function () {
 		return {
-//			compSchedule: this.schedule_props,
+			//			compSchedule: this.schedule_props,
 			showMonth: 'sep',
 			monthCode: {
 				jan: '01',
@@ -87,17 +87,18 @@ Vue.component('schedule-by-month', {
 			console.log(arg.location);
 			app.show = 'my match';
 			app.matchDate = arg;
+			window.scrollTo(0, 0);
 		},
 		capitalShow: function (arg) {
 			return arg.toUpperCase();
 		},
 		seen2: function (arg) {
 			this.showMonth = arg;
-			window.scrollTo(0, 0);
+			//			window.scrollTo(0, 0);
 		}
 	},
 	computed: {
-		compSchedule: function(){
+		compSchedule: function () {
 			return this.schedule_props;
 		},
 		compSchedule_F: function () {
@@ -149,8 +150,8 @@ Vue.component('team-members', {
 			return arr;
 		},
 		getManager: function () {
-			for(var i=0 ; i<this.compTeams.length; i++){
-				if(this.compTeams[i].name == this.compTeam){
+			for (var i = 0; i < this.compTeams.length; i++) {
+				if (this.compTeams[i].name == this.compTeam) {
 					return this.compTeams[i].manager;
 				}
 			}
@@ -160,36 +161,36 @@ Vue.component('team-members', {
 		compTeam: function () {
 			return this.team_props;
 		}
-		
-//		,
-//		getTeamIndex: function () {
-//			switch (this.compTeam) {
-//				case 'admirals':
-//					return 0;
-//					break;
-//				case 'chiefs':
-//					return 1;
-//					break;
-//				case 'droids':
-//					return 2;
-//					break;
-//				case 'emperors':
-//					return 3;
-//					break;
-//				case 'raiders':
-//					return 4;
-//					break;
-//				case 'sandcrawlers':
-//					return 5;
-//					break;
-//				case 'wampas':
-//					return 6;
-//					break;
-//				default:
-//					return null;
-//			}
-//		}
-		
+
+		//		,
+		//		getTeamIndex: function () {
+		//			switch (this.compTeam) {
+		//				case 'admirals':
+		//					return 0;
+		//					break;
+		//				case 'chiefs':
+		//					return 1;
+		//					break;
+		//				case 'droids':
+		//					return 2;
+		//					break;
+		//				case 'emperors':
+		//					return 3;
+		//					break;
+		//				case 'raiders':
+		//					return 4;
+		//					break;
+		//				case 'sandcrawlers':
+		//					return 5;
+		//					break;
+		//				case 'wampas':
+		//					return 6;
+		//					break;
+		//				default:
+		//					return null;
+		//			}
+		//		}
+
 	}
 });
 //*******************************************************
@@ -293,6 +294,78 @@ var app = new Vue({
 				default:
 					return null;
 			}
+		},
+		handler: function(arg1, arg2){
+			this.seen(arg1, arg2);
+			this.login();
+		},
+		login: function() {
+			// https://firebase.google.com/docs/auth/web/google-signin
+
+			var provider = new firebase.auth.GoogleAuthProvider();
+			//
+			// How to Log In??
+			//	Either with a popup window or redirection to the provider`s page:
+			if (firebase.auth().currentUser == null) {
+//				alert('You are about to log in');
+				//	document.getElementById("login").checked = false;
+
+				firebase.auth().signInWithPopup(provider)
+					.then(function (result) {
+						console.log('Waiting for Posts from Firebase...');
+						app.getPosts();
+					})
+					.catch(function (error) {
+						alert(error);
+						console.log(error);
+					});
+			} else {
+//				alert('You are about to log out');
+				firebase.auth().signOut()
+					.then(function () {
+						document.getElementById("posts").innerHTML = "Log In to Start Live Chat";
+					})
+					.catch(function (error) {
+						console.log('SignOut failed. You are still logged In!!');
+					});
+			}
+		},
+		writeNewPost: function () {
+
+			// https://firebase.google.com/docs/database/web/read-and-write
+
+			var textToSend = document.getElementById("textInput").value;
+			console.log(textToSend);
+			// // Values
+			var message = {
+				message: textToSend,
+				name: firebase.auth().currentUser.displayName
+			};
+			console.log(message);			
+			firebase.database().ref('NYSLchat').push(message);
+			console.log("write");
+			document.getElementById("textInput").value = "";
+
+		},
+		getPosts: function () {
+
+			firebase.database().ref('NYSLchat').on('value', function (data) {
+				
+				var posts = document.getElementById("posts");
+				posts.innerHTML = "";
+				var messages = data.val();
+				for (var key in messages) {
+					var text = document.createElement("div");
+					var element = messages[key];
+
+					text.append(element.message);
+					text.append(element.name);
+					posts.append(text);
+				}				
+			});
+
+			//	console.log("getting posts");
+
 		}
 	},
 	computed: {
@@ -354,105 +427,14 @@ var app = new Vue({
 // *****************--FIREBASE LIVE CHAT--********************
 
 //waiting for data to be loaded from "created" so I need an if to check on it
-if (app.schedule.length != 0 || app.players.length != 0 || app.teams.length != 0 || app.maps.length != 0) {
-	console.log('Leyendo eventListeners del chat...');
-	document.getElementById("login").addEventListener("click", login);
-	document.getElementById("create-post").addEventListener("click", writeNewPost);
-};
+
+//console.log('Leyendo eventListeners del chat...');
+
+//document.getElementById("login").addEventListener("click", login);
+//document.getElementById("create-post").addEventListener("click", writeNewPost);
+
 
 //getPosts();
-
-
-function login() {
-	// https://firebase.google.com/docs/auth/web/google-signin
-
-	var provider = new firebase.auth.GoogleAuthProvider();
-	//
-	// How to Log In??
-	//	Either with a popup window or redirection to the provider`s page:
-	//	firebase.auth().signInWithPopup(provider);
-
-	if (firebase.auth().currentUser == null) {
-		alert('You are about to log in');
-		//	document.getElementById("login").checked = false;
-
-		firebase.auth().signInWithPopup(provider)
-			.then(function (result) {
-				//		document.getElementById("login").checked = true;
-				//		console.log('SignIn successfull. Usuario logged In');
-				//		document.getElementById("logInOut").innerHTML = 'Log Out';
-				getPosts();
-			})
-			.catch(function (error) {
-				//		document.getElementById("login").checked = false;
-				//		checkedValue = document.getElementById("login").checked;			
-				alert('SignIn failed... Try again');
-			});
-	} else {
-		alert('You are about to log out');
-		//		document.getElementById("login").checked = true;
-
-		firebase.auth().signOut()
-			.then(function () {
-				// Sign-out successful.
-				//		document.getElementById("login").checked = false;
-				//		console.log('SignOut successful');
-				//		document.getElementById("logInOut").innerHTML = 'Log In';
-				document.getElementById("posts").innerHTML = "Log In to Start Live Chat";
-			})
-			.catch(function (error) {
-				// An error happened.
-				//		document.getElementById("login").checked = true;
-				console.log('SignOut failed. You are still logged In!!');
-			});
-	}
-}
-
-
-function writeNewPost() {
-
-	// https://firebase.google.com/docs/database/web/read-and-write
-
-	var textToSend = document.getElementById("textInput").value;
-	console.log(textToSend);
-	// // Values
-	var message = {
-		message: textToSend,
-		name: firebase.auth().currentUser.displayName
-	};
-	console.log(message);
-	//
-	//
-	firebase.database().ref('NYSLchat').push(message);
-
-	console.log("write");
-	document.getElementById("textInput").value = "";
-
-}
-
-
-function getPosts() {
-
-	firebase.database().ref('NYSLchat').on('value', function (data) {
-		//
-		var posts = document.getElementById("posts");
-		posts.innerHTML = "";
-		//		console.log('data.val() es:  ' + data.val());
-		var messages = data.val();
-		for (var key in messages) {
-			var text = document.createElement("div");
-			var element = messages[key];
-
-			text.append(element.message);
-			text.append(element.name);
-			posts.append(text);
-		}
-		//
-	});
-
-	//	console.log("getting posts");
-
-}
 
 
 
