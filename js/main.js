@@ -121,7 +121,7 @@ Vue.component('schedule-by-month', {
 	//		}
 	//	}
 });
-//**********The below component is not behaving properly: TeamIndex is not working properly as the switch statement is set for the sourced teams array instead of the sorte teams array************************************
+//**********The below component is not behaving properly: TeamIndex is not working properly as the switch statement is set for the sourced teams array instead of the sorted teams array************************************
 Vue.component('team-members', {
 	template: '<div class="overflow-auto border border-light overflow_dimensions"><dl><dt>MANAGER</dt><dd>{{getManager()}}</dd><dt>CAPTAIN</dt><dd>{{getCaptain()}}</dd><dt>PLAYERS</dt><dd v-for="item in getTeamMembers()">{{item}}</dd></dl></div>',
 	props: ['players_props', 'teams_props', 'team_props'],
