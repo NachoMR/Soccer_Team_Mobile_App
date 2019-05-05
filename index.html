@@ -33,10 +33,9 @@
 						<div class="col-8 col-sm-8 d-flex flex-column justify-content-center">
 							<h1 class="h3 mb-2 text-center">NorthSide Youth Soccer League</h1>
 							<div class="d-flex justify-content-around">
-								<p class="h4 lead">{{capitalShow(show)}}</p>
+								<p class="h4 lead text-primary font-weight-bold">{{capitalShow(show)}}</p>
 								<div class="custom-control custom-switch ml-auto">
-									<input id="login" v-on:click="handler('chat', 'admirals')" type="checkbox" class="custom-control-input">
-									<!--									id="customSwitch1"-->
+									<input id="login" type="checkbox" class="custom-control-input" v-on:click="handler('admirals')">
 									<label id="logInOut" class="custom-control-label" for="login">Log In</label>
 								</div>
 							</div>
@@ -77,6 +76,7 @@
 		</div>
 
 		<div class="row">
+
 			<div class="col-sm">
 				<div id="loader" v-if="(schedule.length == 0 || players.length == 0 || teams.length == 0 || maps.length == 0)">
 
@@ -108,6 +108,7 @@
 							<div class="text-center mb-3">
 								<p class="h5">SEASON STATS</p>
 								<select name="stats" v-model="statistics">
+									<option disabled value="">Please select one option</option>
 									<option value="clubs">Club Stats</option>
 									<option value="players">Player Stats</option>
 								</select>
@@ -122,7 +123,7 @@
 							</div>
 
 						</div>
-						<!--				*************DIV venues************-->
+						<!--				*************DIV VENUES************-->
 						<div v-show="show == 'venues'">
 							<div class="text-center">
 								<p class="h6 my-2 text-center font-weight-lighter font-italic">Select your desired Location</p>
@@ -163,7 +164,7 @@
 								</div>
 								<div class="d-flex">
 									<span class="fas fa-map-marker-alt mx-3"></span>
-									<p class="h6" v-on:click="goToVenue('venues', matchDate.location)">Venue: {{ capitalShow(matchDate.location) }}</p>
+									<p class="h6 text-info" v-on:click="goToVenue('venues', matchDate.location)">Venue: {{ capitalShow(matchDate.location) }}</p>
 								</div>
 							</div>
 
@@ -198,12 +199,12 @@
 						<div v-show="show == 'teams'">
 							<p class="h6 my-2 text-center font-weight-lighter font-italic">Click on the Photo to see deails </p>
 							<div class="d-flex flex-wrap justify-content-between">
-							
-							<div v-for="item in teams_S" v-on:click="seen('my team', item.name )" class="teams_width my-2">
+
+								<div v-for="item in teams_S" v-on:click="seen('my team', item.name )" class="teams_width my-2">
 									<img v-bind:src="'img/'+item.name+'.JPG'" class="card-img-top" alt="...">
-									<p class="card-title h6 text-center">{{item.name}}</p>
+									<p class="card-title h6 text-center">{{capitalShow( item.name )}}</p>
 								</div>
-							
+
 
 							</div>
 						</div>
@@ -261,37 +262,76 @@
 -->
 						<!--				**************DIV CHAT*************-->
 						<div v-show="show == 'chat'">
+
+							<!--
+							<div v-if="activeChat == null">
+								<p class="h6 my-2 text-center font-weight-lighter font-italic">Click on your team to start Live Chat </p>
+								<div class="d-flex flex-wrap justify-content-center">
+									<div v-for="item in teams_S" v-on:click="seenChat(item.name)" class="chat_icon m-2">
+										<img v-bind:src="'img/'+item.name+'_logo.JPG'" class="card-img-top" alt="...">
+									</div>
+								</div>
+							</div>
 							<div class="text-center">
 								<div class="chat">
-
 									<div id="posts" class="py-2 h5 font-italic box overflow-auto  my-2 overflow_chat">
 										Log In to Start Live Chat
 									</div>
-
 									<div class="inputs">
 										<div class="d-flex flex-column">
 											<div class="d-flex flex-row justify-content-around align-items-center">
 												<input id="textInput" class="input w-75" type="text" placeholder="Your message...">
 												<button v-on:click="writeNewPost()" id="create-post" class="btn btn-outline-primary button is-primary">Send</button>
 											</div>
-											<!--									<button id="login" class="btn btn-outline-primary button is-info">Login!</button>-->
-
 										</div>
 									</div>
-
-									<!--
-								<div class="text-center">
-									<p class="h6 my-2 text-center font-weight-lighter font-italic">Select your Live Chat</p>
-									<select name="selectChat" class="mb-3" v-model="activeChat">
-										<option value="admirals">ADMIRALS</option>
-										<option value="chiefs">CHIEFS</option>
-										<option value="droids">DROIDS</option>
-									</select>									
-								</div>
--->
-
 								</div>
 							</div>
+-->
+
+
+							<template v-if="logged_In">
+								<div class="d-flex flex-wrap justify-content-center">
+									<div v-for="item in teams_S" v-on:click="seenChat(item.name)" class="m-1">
+										<img v-bind:id="item.name + '_chat_icon'" v-bind:src="'img/'+item.name+'_logo.JPG'" class="chat_icon" alt="...">
+									</div>
+								</div>
+								<div>
+									<div v-if="activeChat == null" class="text-center py-2 h5 font-italic box overflow-auto my-2 overflow_chat">
+										Click on your team to start Live Chat
+									</div>
+									<div v-else id="posts" class="text-center overflow-auto p-0 my-2 overflow_chat container">
+<!--										<ul>-->
+											<div class="row no-gutters" v-for="chatPost in chatPosts">
+												<div class="col-1" v-if="currentUserName == chatPost.name"></div>
+												<div class="col-11 postDiv text-left my-1 rounded border border-primary d-flex bg-light">
+													<img v-bind:src=chatPost.photo class="align-items-start" alt="user profile picture">
+													<div class="px-2 d-flex flex-column">
+														<h6 class="d-inline align-items-start text-primary font-weight-bold">{{chatPost.name}}</h6>
+														<p class="d-inline align-items-end text-dark">{{chatPost.message}}</p>
+													</div>
+												</div>
+<!--												<div class="col-1" v-else></div>-->
+											</div>
+<!--										</ul>-->
+									</div>
+									<div v-if="activeChat != null" class="inputs">
+<!--										<div class="d-flex flex-column">-->
+											<div class="d-flex flex-row justify-content-around align-items-center p-1">
+												<input id="textInput" class="input w-75" type="text" placeholder="Your message...">
+												<button v-on:click="writeNewPost(activeChat)" id="create-post" class="btn btn-outline-primary button is-primary">Send</button>
+											</div>
+<!--										</div>-->
+									</div>
+								</div>
+							</template>
+							<template v-else>
+								<div class="text-center py-2 h5 font-italic box overflow-auto my-2 overflow_chat">
+									Log In to Start Live Chat
+								</div>
+							</template>
+
+
 						</div>
 						<!--				**************DIV 	EMAIL**********-->
 						<div v-show="show == 'email'">
@@ -327,8 +367,10 @@
 
 
 
-	<!--	FIREBASE Live Chat Requirements-->
-	<script src="https://www.gstatic.com/firebasejs/5.8.0/firebase.js"></script>
+	<!--	Configuring my app to use FIREBASE  -->
+	<!--	We are Adding the entire Firebase JavaScript SDK (Firebase products). This means Authentication, Database, Storage, Hosting, Functions and Machine Learning Kit.  -->
+
+	<script src="https://www.gstatic.com/firebasejs/5.10.1/firebase.js"></script>
 	<script>
 		// Initialize Firebase
 		var config = {
@@ -340,7 +382,6 @@
 			messagingSenderId: "896469319926"
 		};
 		firebase.initializeApp(config);
-
 	</script>
 	<!--	Bootstrap Requirements-->
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -354,6 +395,4 @@
 
 	<!--My Scripts-->
 	<script type="text/javascript" src="js/main.js"></script>
-</body>
-
-</html>
+</body></html>

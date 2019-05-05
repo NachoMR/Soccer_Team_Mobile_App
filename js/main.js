@@ -1,5 +1,5 @@
 Vue.component('clubs-stats', {
-	template: '<table class="w-100 table-striped text-center"><thead><tr><th>TEAM</th><th>PLAYED</th><th>W</th><th>L</th><th>T</th><th>POINTS</th></tr></thead><tbody><tr v-for="item in compTeams" :class="{success: (item.name == team1ToCheck) || (item.name == team2ToCheck)}"><td>{{ capitalize(item.name) }}</td><td>{{ sumPlayed(item) }}</td><td>{{ item.wins.length }}</td><td>{{ item.losses.length }}</td><td>{{ item.ties.length }}</td><td>{{sumPoints(item)}}</td></tr></tbody></table>',
+	template: '<table class="w-100 table-striped text-center"><thead><tr><th>TEAM</th><th>PLAYED</th><th>W</th><th>L</th><th>T</th><th>POINTS</th></tr></thead><tbody><tr v-for="compTeam in compTeams" :class="{success: (compTeam.name == team1ToCheck) || (compTeam.name == team2ToCheck)}"><td>{{ capitalize(compTeam.name) }}</td><td>{{ sumPlayed(compTeam) }}</td><td>{{ compTeam.wins.length }}</td><td>{{ compTeam.losses.length }}</td><td>{{ compTeam.ties.length }}</td><td>{{sumPoints(compTeam)}}</td></tr></tbody></table>',
 	props: ['teams_props', 'team1_props', 'team2_props'],
 	data: function () {
 		return {
@@ -8,15 +8,15 @@ Vue.component('clubs-stats', {
 		}
 	},
 	methods: {
-		capitalize: function (arg) {
+		capitalize: function (teamName) {
 			//			console.log(this.compTeams.wins.length);
-			return arg.charAt(0).toUpperCase() + arg.slice(1);
+			return teamName.charAt(0).toUpperCase() + teamName.slice(1);
 		},
-		sumPoints: function (arg) {
-			return (arg.wins.length * 3) + (arg.ties.length * 1);
+		sumPlayed: function (team) {
+			return (team.wins.length + team.losses.length + team.ties.length);
 		},
-		sumPlayed: function (arg) {
-			return (arg.wins.length + arg.losses.length + arg.ties.length);
+		sumPoints: function (team) {
+			return (team.wins.length * 3) + (team.ties.length * 1);
 		}
 		//		,
 		//		compTeams_S: function () {
@@ -56,7 +56,7 @@ Vue.component('players-stats', {
 });
 //*******************************************************
 Vue.component('schedule-by-month', {
-	template: `<div class="py-2 text-center"><p class="h6 my-2 text-center font-weight-lighter font-italic">Select a month to display games</p><button type="button" v-on:click="seen2('sep')" class="btn btn-outline-primary">SEP</button><button type="button" v-on:click="seen2('oct')" class="btn btn-outline-primary">OCT</button><button type="button" v-on:click="seen2('nov')" class="btn btn-outline-primary">NOV</button><button type="button" v-on:click="seen2('dec')" class="btn btn-outline-primary">DIC</button><button type="button" v-on:click="seen2('jan')" class="btn btn-outline-primary">JAN</button><p class="h6 mt-3 mb-0 text-center font-weight-lighter font-italic">Click on the match to see details</p><table class="w-100 table-striped table-hover text-center"><thead><tr><th>{{capitalShow(showMonth)}}</th><th>TEAMS</th><th>VENUE</th><th>TIME</th></tr></thead><tbody><tr v-for="item in compSchedule_F"  v-on:click="go(item)"><td>{{item.date}}</td><td>{{item.team1 + ' vs ' + item.team2}}</td><td>{{item.location}}</td><td>{{item.time}}</td></tr></tbody></table></div>`,
+	template: `<div class="py-2 text-center"><p class="h6 my-2 text-center font-weight-lighter font-italic">Select a month to display games</p><button id="sep" type="button" class="btn btn-outline-primary" v-on:click="seen2('sep')">SEP</button><button id="oct" type="button" v-on:click="seen2('oct')" class="btn btn-outline-primary">OCT</button><button id="nov" type="button" v-on:click="seen2('nov')" class="btn btn-outline-primary">NOV</button><button id="dec" type="button" v-on:click="seen2('dec')" class="btn btn-outline-primary">DEC</button><button id="jan" type="button" v-on:click="seen2('jan')" class="btn btn-outline-primary">JAN</button><p class="h6 mt-3 mb-0 text-center font-weight-lighter font-italic">Click on the match to see details</p><table class="w-100 table-striped table-hover text-center"><thead><tr><th>{{capitalShow(showMonth)}}</th><th>TEAMS</th><th>VENUE</th><th>TIME</th></tr></thead><tbody><tr v-for="sched in compSchedule_F" v-on:click="go(sched)"><td>{{sched.date}}</td><td>{{sched.team1 + ' vs ' + sched.team2}}</td><td>{{sched.location}}</td><td>{{sched.time}}</td></tr></tbody></table></div>`,
 	props: ['schedule_props'],
 	data: function () {
 		return {
@@ -78,22 +78,26 @@ Vue.component('schedule-by-month', {
 			}
 		}
 	},
+//	beforeMount() {
+//		document.getElementById("sep").classList.add("monthButton");
+//	},
 	methods: {
-		go: function (arg) {
-			console.log(arg.date);
-			console.log(arg.time);
-			console.log('team1: ' + arg.team1);
-			console.log('team2: ' + arg.team2);
-			console.log(arg.location);
+		go: function (sched) {
+			console.log(sched.date);
+			console.log(sched.time);
+			console.log('team1: ' + sched.team1);
+			console.log('team2: ' + sched.team2);
+			console.log(sched.location);
 			app.show = 'my match';
-			app.matchDate = arg;
+			app.matchDate = sched;
 			window.scrollTo(0, 0);
 		},
 		capitalShow: function (arg) {
+			//document.getElementById(showMonth).classList.toggle("monthButton", this.showMont)
 			return arg.toUpperCase();
 		},
-		seen2: function (arg) {
-			this.showMonth = arg;
+		seen2: function (monthName) {
+			this.showMonth = monthName;
 			//			window.scrollTo(0, 0);
 		}
 	},
@@ -103,7 +107,6 @@ Vue.component('schedule-by-month', {
 		},
 		compSchedule_F: function () {
 			//		_F stands for Filtered(by month)
-
 			return this.compSchedule.filter((arg) => {
 				return (arg.date.substring(5, 7)) == this.monthCode[this.showMonth];
 			})
@@ -123,7 +126,7 @@ Vue.component('schedule-by-month', {
 });
 //**********The below component is not behaving properly: TeamIndex is not working properly as the switch statement is set for the sourced teams array instead of the sorted teams array************************************
 Vue.component('team-members', {
-	template: '<div class="overflow-auto border border-light overflow_dimensions"><dl><dt>MANAGER</dt><dd>{{getManager()}}</dd><dt>CAPTAIN</dt><dd>{{getCaptain()}}</dd><dt>PLAYERS</dt><dd v-for="item in getTeamMembers()">{{item}}</dd></dl></div>',
+	template: '<div class="overflow-auto border border-light overflow_dimensions"><dl><dt>MANAGER</dt><dd>{{getManager()}}</dd><dt>CAPTAIN</dt><dd>{{getCaptain()}}</dd><dt>PLAYERS {{getTeamMembers.length}}</dt><dd v-for="item in getTeamMembers()">{{item}}</dd></dl></div>',
 	props: ['players_props', 'teams_props', 'team_props'],
 	data: function () {
 		return {
@@ -211,7 +214,11 @@ var app = new Vue({
 		},
 		show: 'home',
 		activeTeam: 'admirals',
-		statistics: 'clubs',
+		logged_In: null,
+		currentUserName: "",
+		activeChat: null,
+		chatPosts: [],
+		statistics: '',
 		locationCode: 'gre',
 		players: [],
 		teams: [],
@@ -221,15 +228,23 @@ var app = new Vue({
 
 	},
 	created() {
+		console.log("logged_In al iniciar el CREATED: " + this.logged_In);
+		//The below function is an observer/listener watching the state of the Authentication
 		firebase.auth().onAuthStateChanged(function (user) {
 			if (user) {
 				document.getElementById("login").checked = true;
 				console.log('SignIn successfull');
 				document.getElementById("logInOut").innerHTML = 'Log Out';
+				app.logged_In = true;
+				console.log("logged_In justo despues del onAuthStateChanged: " + app.logged_In);
+				app.currentUserName = firebase.auth().currentUser.displayName;
 			} else {
 				document.getElementById("login").checked = false;
 				console.log('SignOut successful');
 				document.getElementById("logInOut").innerHTML = 'Log In';
+				app.logged_In = false;
+				console.log("logged_In justo despues del onAuthStateChanged: " + app.logged_In);
+				app.currentUserName = "";
 			}
 		});
 		this.getData('players');
@@ -261,11 +276,29 @@ var app = new Vue({
 		capitalShow: function (arg) {
 			return arg.toUpperCase();
 		},
+		//Function to switch between different sections of the aplication, e.g. Home, Teams, Schedule...
 		seen: function (arg, argTeam) {
 			this.show = arg;
 			this.activeTeam = argTeam;
 			console.log('El app.activeTeam es: ' + this.activeTeam);
 			window.scrollTo(0, 0);
+		},
+		//handler to actuate on the LogIn/LogOut Switch
+		handler: function(argTeam){
+			this.seen("chat", argTeam);
+			this.login();
+		},
+		//Function to switch between the different Live Chats
+		seenChat: function(teamName){			
+			this.activeChat = teamName;
+			console.log("this.activeChat is: " + this.activeChat);
+			var arr = document.getElementsByClassName("chat_icon");					
+			for(var i=0 ; i<arr.length ; i++){
+				arr[i].classList.add("opacity_chat_icon");
+			}
+			document.getElementById(teamName + "_chat_icon").classList.toggle("opacity_chat_icon");
+			app.chatPosts = [];
+			this.getPosts(this.activeChat);
 		},
 		goToVenue: function (arg1, arg2) {
 			this.show = arg1;
@@ -295,77 +328,78 @@ var app = new Vue({
 					return null;
 			}
 		},
-		handler: function(arg1, arg2){
-			this.seen(arg1, arg2);
-			this.login();
-		},
+		// 3 Methods related to Live Chat: login, writeNewPost and getPosts
 		login: function() {
 			// https://firebase.google.com/docs/auth/web/google-signin
-
-			var provider = new firebase.auth.GoogleAuthProvider();
-			//
-			// How to Log In??
-			//	Either with a popup window or redirection to the provider`s page:
+			var provider = new firebase.auth.GoogleAuthProvider();			
 			if (firebase.auth().currentUser == null) {
-//				alert('You are about to log in');
-				//	document.getElementById("login").checked = false;
-
 				firebase.auth().signInWithPopup(provider)
 					.then(function (result) {
 						console.log('Waiting for Posts from Firebase...');
-						app.getPosts();
+						app.logged_In = true;
+						console.log("logged_In justo despues del login: " + app.logged_In);
+						app.currentUserName = firebase.auth().currentUser.displayName;
+						console.log(firebase.auth().currentUser.displayName);
 					})
 					.catch(function (error) {
 						alert(error);
 						console.log(error);
 					});
 			} else {
-//				alert('You are about to log out');
 				firebase.auth().signOut()
 					.then(function () {
-						document.getElementById("posts").innerHTML = "Log In to Start Live Chat";
+						//document.getElementById("posts").innerHTML = "Log In to Start Live Chat";
+						app.logged_In = false;
+						app.activeChat = null;
+						console.log("logged_In justo despues del login: " + app.logged_In);
+						app.currentUserName = "";
 					})
 					.catch(function (error) {
 						console.log('SignOut failed. You are still logged In!!');
 					});
 			}
 		},
-		writeNewPost: function () {
-
+		writeNewPost: function (activeChat) {
 			// https://firebase.google.com/docs/database/web/read-and-write
-
 			var textToSend = document.getElementById("textInput").value;
 			console.log(textToSend);
 			// // Values
 			var message = {
 				message: textToSend,
-				name: firebase.auth().currentUser.displayName
+				name: firebase.auth().currentUser.displayName,
+				photo: firebase.auth().currentUser.photoURL
 			};
 			console.log(message);			
-			firebase.database().ref('NYSLchat').push(message);
-			console.log("write");
-			document.getElementById("textInput").value = "";
-
-		},
-		getPosts: function () {
-
-			firebase.database().ref('NYSLchat').on('value', function (data) {
-				
-				var posts = document.getElementById("posts");
-				posts.innerHTML = "";
-				var messages = data.val();
-				for (var key in messages) {
-					var text = document.createElement("div");
-					var element = messages[key];
-
-					text.append(element.message);
-					text.append(element.name);
-					posts.append(text);
-				}				
+			console.log(message.photo);
+			//Now we're going to make the push to the firbase.database().ref("my_chat")
+			//Remember that push() is a promise so I can add a .then(data){some code here} and extract some info like the firebase key of the message I am pushing to Firebase.
+			firebase.database().ref("chats/" + activeChat).push(message)
+			.then((data) => {
+				console.log(data);
+				console.log(data.key);
 			});
-
-			//	console.log("getting posts");
-
+			document.getElementById("textInput").value = "";
+		},
+		getPosts: function (activeChat) {
+			
+			firebase.database().ref("chats/" + activeChat).on('value', function (snapshot){
+			//snapshot.val() is the object stored in the Firebase.database() at the moment of either calling the function or modifying its content in some way
+			console.log(snapshot.val());
+			//app.chatPosts = snapshot.val();
+			app.chatPosts = [];
+			//document.getElementById("posts").innerHTML = "";
+			for(var key in snapshot.val()){
+				app.chatPosts.push({
+					message: snapshot.val()[key].message,
+					name: snapshot.val()[key].name,
+					photo: snapshot.val()[key].photo
+				});
+			}
+			//app.chatPosts.reverse();
+			});
+//			var posts = document.getElementById("posts");
+//			console.log(posts.height);
+			
 		}
 	},
 	computed: {

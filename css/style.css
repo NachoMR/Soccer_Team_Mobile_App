@@ -1,4 +1,4 @@
-/****** Responsive Design between xs and sm ******/
+/****** Responsive Design between xs and sm (START) ******/
 
 .logo {
 	height: 100px;
@@ -43,6 +43,18 @@ h1 {
 	}
 }
 
+.chat_icon {
+	width: 4rem;
+}
+
+/*
+@media (min-width: 576px) {
+	.chat_icon {
+		width: 6rem;
+	}
+}
+*/
+
 .overflow_dimensions {
 height: 200px;
 	width: 160px;
@@ -56,20 +68,34 @@ height: 200px;
 }
 
 .overflow_chat {
-height: 350px;
+	height: 350px;
 	width: 100%;
-	background-color: beige;
+	background-color: #b8e994;
 }
 
 @media (min-width: 576px) {
 	.overflow_chat {
 		height: 190px;
-		width: 90%;
+		width: 100%;
 	}
 }
 
 
-/****** Responsive Design between xs and sm ******/
+/****** Responsive Design between xs and sm (END) ******/
+
+.postDiv p, .postDiv h6{
+	margin: 0px;
+	overflow: auto;
+}
+.postDiv img{
+	margin: 2px;
+	width: 35px;
+	height: 35px;
+	border-radius: 17.5px;
+	border: 1px black solid;
+}
+
+
 
 .monthButton{
 	color: #ffffff;
@@ -96,6 +122,10 @@ height: 350px;
 
 ul {
 	list-style: none;
+}
+
+.opacity_chat_icon{
+	opacity: 0.3;
 }
 
 /****** photos for the "teams page" ******/
